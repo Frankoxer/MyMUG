@@ -1,14 +1,14 @@
-#ifndef NOTE_H
-#define NOTE_H
+#ifndef noteBlock_H
+#define noteBlock_H
 
 #include <QWidget>
 #include <QTimer>
 
-class Note : public QWidget {
+class noteBlock : public QWidget {
 Q_OBJECT
 
 public:
-    explicit Note(QWidget *parent = nullptr, int trackIndex = 0, qint64 timestamp = 0);
+    explicit noteBlock(QWidget *parent = nullptr, int trackIndex = 0, qint64 timestamp = 0);
 
 protected:
     void paintEvent(QPaintEvent *event) override;
@@ -19,7 +19,7 @@ private:
     qint64 timestamp;  // 音符应该被击打的时间戳
 
 private slots:
-    void moveNote();
+    void movenoteBlock();
 };
 
-#endif // NOTE_H
+#endif // noteBlock_H

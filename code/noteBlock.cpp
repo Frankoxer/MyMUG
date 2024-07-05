@@ -1,16 +1,16 @@
-#include "note.h"
+#include "../include/noteBlock.h"
 #include <QPainter>
 #include <QDateTime>
 
-Note::Note(QWidget *parent, int trackIndex, qint64 timestamp)
+noteBlock::noteBlock(QWidget *parent, int trackIndex, qint64 timestamp)
         : QWidget(parent), trackIndex(trackIndex), timestamp(timestamp) {
     setFixedSize(120, 20);  // 设置音符的大小
     timer = new QTimer(this);
-    connect(timer, &QTimer::timeout, this, &Note::moveNote);
+    connect(timer, &QTimer::timeout, this, &noteBlock::movenoteBlock);
     timer->start(16);  // 每16毫秒移动一次音符（约60帧每秒）
 }
 
-void Note::paintEvent(QPaintEvent *event) {
+void noteBlock::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
@@ -21,7 +21,7 @@ void Note::paintEvent(QPaintEvent *event) {
     QWidget::paintEvent(event);
 }
 
-void Note::moveNote() {
+void noteBlock::movenoteBlock() {
     move(x(), y() + 1);  // 每次移动音符1像素
     if (y() > parentWidget()->height()) {
         timer->stop();

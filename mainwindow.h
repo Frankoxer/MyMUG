@@ -4,9 +4,10 @@
 #include <QWidget>
 #include <QKeyEvent>
 #include <QMap>
-#include "track.h"
-#include "note.h"
-#include "keyevent.h"
+#include "include/track.h"
+#include "include/noteBlock.h"
+#include "include/KeyEvent.h"
+#include "code/Key.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -23,11 +24,14 @@ protected:
     void keyPressEvent(QKeyEvent *event) override;
     void keyReleaseEvent(QKeyEvent *event) override;
 
+signals:
+    void keyStateChanged(const Key &key);
+
 private:
     Ui::MainWindow *ui;
-    QMap<int, KeyEvent*> activeKeys;  // 存储正在按下的键
+    QMap<int, Key*> activeKeys;  // 存储正在按下的键
     QList<Track*> tracks;
-    QList<Note*> notes;
+    QList<noteBlock*> noteBlocks;
 
     void createTracks();
     void createNotes();

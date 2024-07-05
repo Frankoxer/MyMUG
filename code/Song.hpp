@@ -1,6 +1,8 @@
 #ifndef SONG_HPP
 #define SONG_HPP
 
+//#pragma once
+
 #include <string>
 #include <utility>
 #include <vector>
@@ -11,8 +13,8 @@
 
 class Song {
 public:
-    Song(std::string title, std::string artist, int bpm, const std::vector<Note>& notes, int endTime)
-        : title(std::move(title)), artist(std::move(artist)), bpm(bpm), notes(notes) ,endTime(endTime){}
+//    Song(std::string title, std::string artist, int bpm, const std::vector<Note>& notes, int endTime)
+//        : title(std::move(title)), artist(std::move(artist)), bpm(bpm), notes(notes) ,endTime(endTime){}
 
     Song(std::ifstream &file); // 构造函数：从文件中读取歌曲信息并创建歌曲对象
 
