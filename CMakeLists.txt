@@ -23,10 +23,10 @@ add_executable(MyMUG
         code/View/mainwindow.h
         code/View/mainwindow.ui
         code/View/track.cpp
-        include/track.h
+        code/View/track.h
         code/View/noteBlock.cpp
-        include/noteBlock.h
-        include/KeyEvent.h
+        code/View/noteBlock.h
+        code/View/KeyEvent.h
 #        resource.qrc
         ${RESOURCES}
         code/ViewModel.h
