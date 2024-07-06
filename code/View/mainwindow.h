@@ -4,10 +4,16 @@
 #include <QWidget>
 #include <QKeyEvent>
 #include <QMap>
-#include "../../include/track.h"
-#include "../../include/noteBlock.h"
-#include "../../include/KeyEvent.h"
-#include "code/Key.hpp"
+#include "track.h"
+#include "noteBlock.h"
+#include "KeyEvent.h"
+#include "../Common/Key.hpp"
+#include "../Common/NoteInfo.h"
+
+// typedef struct {
+//     int x;
+//     int y;
+// } NoteInfo;
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -20,6 +26,12 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow() override;
     bool* outputKey(); // 返回bool指针
+    void setActiveNotes(std::vector<NoteInfo> *activeNotesPtr) {activeNotes = activeNotesPtr;} // 设置activeNotes
+    void recieveActiveNotes(std::vector<NoteInfo> *activeNotesPtr);
+    std::vector<NoteInfo>* getActiveNotes() const { return activeNotes; }
+
+public slots:
+    void updateView();
 
 protected:
     void keyPressEvent(QKeyEvent *event) override;
@@ -34,7 +46,7 @@ private:
     QList<Track*> tracks;
     QList<noteBlock*> noteBlocks;
     std::vector<NoteInfo> *activeNotes;  // 用于存储activeNotesPtr
-    bool key[4] = {false, false, false, false};  // 用于保存按键状态
+    bool keyFromView[4] = {false, false, false, false};  // 用于保存按键状态
 
     void createTracks();
     void createNotes();

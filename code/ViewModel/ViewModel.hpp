@@ -1,6 +1,7 @@
 #ifndef VIEWMODEL_HPP
 #define VIEWMODEL_HPP
 
+#include <QObject>
 #include <iostream>
 #include <fstream>
 #include <chrono>
@@ -9,7 +10,9 @@
 #include <memory>
 #include "Song.hpp"
 #include "Note.hpp"
-#include "Key.hpp"
+#include "../Common/Key.hpp"
+#include "../Common/NoteInfo.h"
+#include "PlayThread.h"
 
 // 全局常量
 const int LENGTH = 1440;
@@ -22,29 +25,26 @@ const int TIME_INTERVAL = 16;
 const int SPEED = 1;
 const int PERFECT_TIME = 80;
 
-// NoteInfo 结构体定义
-typedef struct {
-    int x;
-    int y;
-} NoteInfo;
-
-class ViewModel {
+class ViewModel : public QObject{
+    Q_OBJECT
 public:
+    // explicit ViewModel(QObject *parent = nullptr);
     ViewModel()
         : point(0),
           gameStartTime(std::chrono::steady_clock::now()),
           keyFromViewPtr(nullptr),
-          activeNotesPtr(nullptr) {}
+          activeNotesPtr(nullptr),
+          song(Song("", "", 0, std::vector<Note>(), 0)) {}
 
-    void initialize(const std::string& songFile, bool* keyFromView, std::vector<NoteInfo>* activeNotes) {
+    void initialize(const std::string& songFile, bool* keyFromView) {
         std::ifstream file(songFile);
         if (!file.is_open()) {
             throw std::runtime_error("Failed to open file");
         }
 
-        song = std::make_unique<Song>(file);
-        song->ShowSong();
-        notes = song->getNotes();
+        song = Song(file);
+        // song.ShowSong();
+        notes = song.getNotes();
         if (notes.empty()) {
             throw std::runtime_error("No notes in the song");
         }
@@ -56,35 +56,54 @@ public:
         keys[3] = Key('k', false, gameStartTime, 0, 0);
 
         keyFromViewPtr = keyFromView;
-        activeNotesPtr = activeNotes;
+        activeNotesPtr = &activeNotes;
     }
 
     void run() {
         auto it = notes.begin();
+        gameStartTime = std::chrono::steady_clock::now();
         while (true) {
             auto beforeLoopTime = std::chrono::steady_clock::now();
 
             updateNotes(it);
             updateKeyStates();
             checkHits();
-
             auto afterLoopTime = std::chrono::steady_clock::now();
             std::this_thread::sleep_for(std::chrono::milliseconds(TIME_INTERVAL) - (afterLoopTime - beforeLoopTime));
-            if ((afterLoopTime - gameStartTime).count() > song->getEndTime()) {
+            // std::cout << activeNotes.size() << std::endl;
+            // 检查是否到达乐曲结束时间，如果是，则退出循环
+            auto currentTime = std::chrono::steady_clock::now();
+            auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - gameStartTime).count();
+            if (elapsedTime > song.getEndTime()) {
+                std::cout << "Song ended. Exiting game loop." << std::endl;
                 break;
             }
+            if(activeNotesPtr == nullptr) {
+                std::cout << "activeNotesPtr is nullptr" << std::endl;
+            }
+            emit updateView();
         }
     }
+
+    void startGame() {
+        PlayThread *playThread = new PlayThread(this);
+        playThread->start();
+    }
+
+    std::vector<NoteInfo>* getActiveNotes() const { return activeNotesPtr; }
+
+signals:
+    void updateView();
 
 private:
     void updateNotes(std::vector<Note>::iterator& it) {
         auto currentTime = std::chrono::steady_clock::now();
         auto timePassed = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - gameStartTime).count();
-        activeNotesPtr->clear();
+        activeNotes.clear();
 
         for (auto i = it; i != notes.end(); ++i) {
-            int x = i->getTrack() * WIDTH / 4 + LEFTEST_TRACK;
-            int y = SPEED * timePassed + LINE - i->getTimestamp() * SPEED;
+            int x = (i->getTrack()-1) * WIDTH + LEFTEST_TRACK;
+            int y = SPEED * timePassed / 5 + LINE - i->getTimestamp() * SPEED / 5;
 
             if (y > HEIGHT) {
                 it = i + 1;
@@ -94,7 +113,7 @@ private:
             }
 
             NoteInfo noteInfo = {x, y};
-            activeNotesPtr->push_back(noteInfo);
+            activeNotes.push_back(noteInfo);
         }
     }
 
@@ -108,7 +127,7 @@ private:
         auto currentTime = std::chrono::steady_clock::now();
         int currentTimeStamp = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - gameStartTime).count();
 
-        for (auto i = activeNotesPtr->begin(); i != activeNotesPtr->end(); ++i) {
+        for (auto i = activeNotes.begin(); i != activeNotes.end(); ++i) {
             if (i->y > LINE - NOTE_HEIGHT && i->y < LINE) {
                 switch (i->x) {
                     case 480:
@@ -144,11 +163,12 @@ private:
     }
 
     int point;
-    std::unique_ptr<Song> song;
+    Song song;
     std::vector<Note> notes;
     std::chrono::time_point<std::chrono::steady_clock> gameStartTime;
     Key keys[4];
     bool* keyFromViewPtr;
+    std::vector<NoteInfo> activeNotes;
     std::vector<NoteInfo>* activeNotesPtr;
 };
 

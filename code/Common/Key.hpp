@@ -13,7 +13,7 @@ private:
 
 public:
     // 构造函数
-    Key(char c,bool a=false,std::chrono::time_point<std::chrono::steady_clock> t=std::chrono::steady_clock::now(),int t1=0,int t2=0) :
+    Key(char c='p',bool a=false,std::chrono::time_point<std::chrono::steady_clock> t=std::chrono::steady_clock::now(),int t1=0,int t2=0) :
     content(c), isPressed(a), gameStartTime(t),pressTimeStamp(t1),releaseTimeStamp(t2) {}
 
     // 获取 content 的值

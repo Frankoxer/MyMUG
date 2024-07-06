@@ -15,7 +15,7 @@ find_package(Qt5 COMPONENTS
         REQUIRED)
 
 # 添加资源文件
-qt5_add_resources(RESOURCES code/View/resource.qrc)
+#qt5_add_resources(RESOURCES code/View/resource.qrc)
 
 add_executable(MyMUG
         main.cpp
@@ -28,8 +28,13 @@ add_executable(MyMUG
         code/View/noteBlock.h
         code/View/KeyEvent.h
 #        resource.qrc
-        ${RESOURCES}
-        code/ViewModel.h
+#        ${RESOURCES}
+        code/ViewModel/ViewModel.hpp
+        code/App/GameApp.cpp
+        code/App/GameApp.h
+        code/Common/NoteInfo.h
+        code/ViewModel/PlayThread.cpp
+        code/ViewModel/PlayThread.h
 )
 
 target_link_libraries(MyMUG

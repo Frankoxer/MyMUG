@@ -1,0 +1,403 @@
+{
+    "artist": "HHD",
+    "bpm": 196,
+    "title": "Chronostasis",
+    "endTime": 23904,
+    "notes": [
+        {
+            "key": 1,
+            "timestamp": 2173,
+            "type": "Tap"
+        },
+        {
+            "key": 3,
+            "timestamp": 2378,
+            "type": "Tap"
+        },
+        {
+            "key": 1,
+            "timestamp": 2704,
+            "type": "Tap"
+        },
+        {
+            "key": 3,
+            "timestamp": 3005,
+            "type": "Tap"
+        },
+        {
+            "key": 1,
+            "timestamp": 3291,
+            "type": "Tap"
+        },
+        {
+            "key": 3,
+            "timestamp": 3589,
+            "type": "Tap"
+        },
+        {
+            "key": 1,
+            "timestamp": 3906,
+            "type": "Tap"
+        },
+        {
+            "key": 3,
+            "timestamp": 4212,
+            "type": "Tap"
+        },
+        {
+            "key": 2,
+            "timestamp": 4524,
+            "type": "Tap"
+        },
+        {
+            "key": 4,
+            "timestamp": 4850,
+            "type": "Tap"
+        },
+        {
+            "key": 2,
+            "timestamp": 5191,
+            "type": "Tap"
+        },
+        {
+            "key": 4,
+            "timestamp": 5481,
+            "type": "Tap"
+        },
+        {
+            "key": 2,
+            "timestamp": 5765,
+            "type": "Tap"
+        },
+        {
+            "key": 4,
+            "timestamp": 6088,
+            "type": "Tap"
+        },
+        {
+            "key": 2,
+            "timestamp": 6373,
+            "type": "Tap"
+        },
+        {
+            "key": 4,
+            "timestamp": 6707,
+            "type": "Tap"
+        },
+        {
+            "key": 1,
+            "timestamp": 6998,
+            "type": "Tap"
+        },
+        {
+            "key": 3,
+            "timestamp": 7297,
+            "type": "Tap"
+        },
+        {
+            "key": 1,
+            "timestamp": 7625,
+            "type": "Tap"
+        },
+        {
+            "key": 3,
+            "timestamp": 7912,
+            "type": "Tap"
+        },
+        {
+            "key": 1,
+            "timestamp": 8223,
+            "type": "Tap"
+        },
+        {
+            "key": 3,
+            "timestamp": 8509,
+            "type": "Tap"
+        },
+        {
+            "key": 1,
+            "timestamp": 8800,
+            "type": "Tap"
+        },
+        {
+            "key": 3,
+            "timestamp": 9132,
+            "type": "Tap"
+        },
+        {
+            "key": 2,
+            "timestamp": 9433,
+            "type": "Tap"
+        },
+        {
+            "key": 4,
+            "timestamp": 9759,
+            "type": "Tap"
+        },
+        {
+            "key": 2,
+            "timestamp": 10062,
+            "type": "Tap"
+        },
+        {
+            "key": 4,
+            "timestamp": 10383,
+            "type": "Tap"
+        },
+        {
+            "key": 2,
+            "timestamp": 10705,
+            "type": "Tap"
+        },
+        {
+            "key": 4,
+            "timestamp": 11000,
+            "type": "Tap"
+        },
+        {
+            "key": 2,
+            "timestamp": 11307,
+            "type": "Tap"
+        },
+        {
+            "key": 4,
+            "timestamp": 11582,
+            "type": "Tap"
+        },
+        {
+            "key": 1,
+            "timestamp": 11858,
+            "type": "Tap"
+        },
+        {
+            "key": 3,
+            "timestamp": 11970,
+            "type": "Tap"
+        },
+        {
+            "key": 1,
+            "timestamp": 12153,
+            "type": "Tap"
+        },
+        {
+            "key": 1,
+            "timestamp": 12498,
+            "type": "Tap"
+        },
+        {
+            "key": 3,
+            "timestamp": 12628,
+            "type": "Tap"
+        },
+        {
+            "key": 1,
+            "timestamp": 12818,
+            "type": "Tap"
+        },
+        {
+            "key": 1,
+            "timestamp": 13130,
+            "type": "Tap"
+        },
+        {
+            "key": 3,
+            "timestamp": 13262,
+            "type": "Tap"
+        },
+        {
+            "key": 1,
+            "timestamp": 13424,
+            "type": "Tap"
+        },
+        {
+            "key": 1,
+            "timestamp": 13706,
+            "type": "Tap"
+        },
+        {
+            "key": 3,
+            "timestamp": 13825,
+            "type": "Tap"
+        },
+        {
+            "key": 1,
+            "timestamp": 13979,
+            "type": "Tap"
+        },
+        {
+            "key": 4,
+            "timestamp": 14315,
+            "type": "Tap"
+        },
+        {
+            "key": 2,
+            "timestamp": 14473,
+            "type": "Tap"
+        },
+        {
+            "key": 4,
+            "timestamp": 14642,
+            "type": "Tap"
+        },
+        {
+            "key": 4,
+            "timestamp": 14961,
+            "type": "Tap"
+        },
+        {
+            "key": 2,
+            "timestamp": 15144,
+            "type": "Tap"
+        },
+        {
+            "key": 4,
+            "timestamp": 15263,
+            "type": "Tap"
+        },
+        {
+            "key": 4,
+            "timestamp": 15581,
+            "type": "Tap"
+        },
+        {
+            "key": 2,
+            "timestamp": 15724,
+            "type": "Tap"
+        },
+        {
+            "key": 4,
+            "timestamp": 15860,
+            "type": "Tap"
+        },
+        {
+            "key": 4,
+            "timestamp": 16186,
+            "type": "Tap"
+        },
+        {
+            "key": 2,
+            "timestamp": 16341,
+            "type": "Tap"
+        },
+        {
+            "key": 4,
+            "timestamp": 16463,
+            "type": "Tap"
+        },
+        {
+            "key": 1,
+            "timestamp": 16740,
+            "type": "Tap"
+        },
+        {
+            "key": 3,
+            "timestamp": 16850,
+            "type": "Tap"
+        },
+        {
+            "key": 1,
+            "timestamp": 17072,
+            "type": "Tap"
+        },
+        {
+            "key": 1,
+            "timestamp": 17405,
+            "type": "Tap"
+        },
+        {
+            "key": 3,
+            "timestamp": 17514,
+            "type": "Tap"
+        },
+        {
+            "key": 1,
+            "timestamp": 17669,
+            "type": "Tap"
+        },
+        {
+            "key": 4,
+            "timestamp": 17976,
+            "type": "Tap"
+        },
+        {
+            "key": 2,
+            "timestamp": 18119,
+            "type": "Tap"
+        },
+        {
+            "key": 4,
+            "timestamp": 18291,
+            "type": "Tap"
+        },
+        {
+            "key": 4,
+            "timestamp": 18631,
+            "type": "Tap"
+        },
+        {
+            "key": 2,
+            "timestamp": 18762,
+            "type": "Tap"
+        },
+        {
+            "key": 4,
+            "timestamp": 18913,
+            "type": "Tap"
+        },
+        {
+            "key": 1,
+            "timestamp": 19194,
+            "type": "Tap"
+        },
+        {
+            "key": 1,
+            "timestamp": 19349,
+            "type": "Tap"
+        },
+        {
+            "key": 4,
+            "timestamp": 19667,
+            "type": "Tap"
+        },
+        {
+            "key": 4,
+            "timestamp": 19811,
+            "type": "Tap"
+        },
+        {
+            "key": 2,
+            "timestamp": 20113,
+            "type": "Tap"
+        },
+        {
+            "key": 2,
+            "timestamp": 20292,
+            "type": "Tap"
+        },
+        {
+            "key": 3,
+            "timestamp": 20602,
+            "type": "Tap"
+        },
+        {
+            "key": 3,
+            "timestamp": 20754,
+            "type": "Tap"
+        },
+        {
+            "key": 1,
+            "timestamp": 21118,
+            "type": "Tap"
+        },
+        {
+            "key": 2,
+            "timestamp": 21466,
+            "type": "Tap"
+        },
+        {
+            "key": 3,
+            "timestamp": 21749,
+            "type": "Tap"
+        }
+    ]
+}

@@ -1,4 +1,4 @@
-#include "../../include/noteBlock.h"
+#include "noteBlock.h"
 #include <QPainter>
 
 noteBlock::noteBlock(QWidget *parent, int trackIndex, int startY)

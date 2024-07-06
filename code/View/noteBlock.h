@@ -8,7 +8,7 @@ class noteBlock : public QWidget {
 Q_OBJECT
 
 public:
-    explicit noteBlock(QWidget *parent = nullptr, int trackIndex = 0, int startY);
+    explicit noteBlock(QWidget *parent = nullptr, int trackIndex = 0, int startY=0);
 
 protected:
     void paintEvent(QPaintEvent *event) override;

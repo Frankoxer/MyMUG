@@ -1,4 +1,4 @@
-#include "../../include/track.h"
+#include "track.h"
 #include <QPainter>
 
 Track::Track(QWidget *parent) : QWidget(parent) {
