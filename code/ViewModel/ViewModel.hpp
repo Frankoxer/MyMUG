@@ -1,3 +1,6 @@
+#ifndef VIEWMODEL_HPP
+#define VIEWMODEL_HPP
+
 #include <iostream>
 #include <fstream>
 #include <chrono>
@@ -148,3 +151,6 @@ private:
     bool* keyFromViewPtr;
     std::vector<NoteInfo>* activeNotesPtr;
 };
+
+
+#endif // VIEWMODEL_HPP
