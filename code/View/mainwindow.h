@@ -4,9 +4,9 @@
 #include <QWidget>
 #include <QKeyEvent>
 #include <QMap>
-#include "include/track.h"
-#include "include/noteBlock.h"
-#include "include/KeyEvent.h"
+#include "../../include/track.h"
+#include "../../include/noteBlock.h"
+#include "../../include/KeyEvent.h"
 #include "code/Key.hpp"
 
 QT_BEGIN_NAMESPACE

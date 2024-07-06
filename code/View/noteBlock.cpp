@@ -1,4 +1,4 @@
-#include "../include/noteBlock.h"
+#include "../../include/noteBlock.h"
 #include <QPainter>
 #include <QDateTime>
 
