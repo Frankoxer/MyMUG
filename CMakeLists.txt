@@ -14,7 +14,24 @@ find_package(Qt5 COMPONENTS
         Widgets
         REQUIRED)
 
-add_executable(MyMUG main.cpp)
+# 添加资源文件
+qt5_add_resources(RESOURCES code/View/resource.qrc)
+
+add_executable(MyMUG
+        main.cpp
+        code/View/mainwindow.cpp
+        code/View/mainwindow.h
+        code/View/mainwindow.ui
+        code/View/track.cpp
+        include/track.h
+        code/View/noteBlock.cpp
+        include/noteBlock.h
+        include/KeyEvent.h
+#        resource.qrc
+        ${RESOURCES}
+        code/ViewModel.h
+)
+
 target_link_libraries(MyMUG
         Qt5::Core
         Qt5::Gui
