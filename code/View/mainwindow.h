@@ -19,6 +19,7 @@ Q_OBJECT
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow() override;
+    bool* outputKey(); // 返回bool指针
 
 protected:
     void keyPressEvent(QKeyEvent *event) override;
@@ -32,6 +33,8 @@ private:
     QMap<int, Key*> activeKeys;  // 存储正在按下的键
     QList<Track*> tracks;
     QList<noteBlock*> noteBlocks;
+    std::vector<NoteInfo> *activeNotes;  // 用于存储activeNotesPtr
+    bool key[4] = {false, false, false, false};  // 用于保存按键状态
 
     void createTracks();
     void createNotes();

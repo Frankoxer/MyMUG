@@ -46,15 +46,15 @@ void MainWindow::createTracks() {
     }
 }
 
-void MainWindow::createNotes() {
-    int startY = 100;  // 音符的起始Y位置
-    qint64 currentTime = QDateTime::currentMSecsSinceEpoch();
+void MainWindow::recieveActiveNotes(std::vector<NoteInfo> *activeNotesPtr) {
+    this->activeNotes = activeNotesPtr;
+}
 
-    for (int i = 0; i < 4; ++i) {
-        noteBlock *note_in_scene = new noteBlock(tracks[i], i, currentTime + (i * 1000)); // 每个音符间隔1秒用于测试
-        startY += 100;
-        note_in_scene->move(0, startY);
-        noteBlocks.append(note_in_scene);
+void MainWindow::createNotes() {
+    if (!activeNotes) return;  // 确保activeNotes指针有效
+
+    for (const auto &noteInfo : *activeNotes) {
+        noteBlock *note = new noteBlock(tracks[(noteInfo.x / 120) - 4], (noteInfo.x / 120) - 4, noteInfo.y);
     }
 }
 
@@ -63,28 +63,15 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
     if (event->isAutoRepeat())
         return;  // 忽略自动重复事件
 
-//    int key = event->key();
-//    QString keyText = event->text();
-//    qint64 timestamp = QDateTime::currentMSecsSinceEpoch();
-
     int key = event->key();
-    char keyContent = static_cast<char>(key);
-    bool isPressed = true;
-    std::chrono::time_point<std::chrono::steady_clock> gameStartTime = std::chrono::steady_clock::now();
-    int pressTimeStamp = std::chrono::duration_cast<std::chrono::milliseconds>(gameStartTime.time_since_epoch()).count();
-    int releaseTimeStamp = 0;
 
-    if (!activeKeys.contains(key)) {
-        Key *keyObj = new Key(keyContent, isPressed, gameStartTime, pressTimeStamp, releaseTimeStamp);
-        activeKeys.insert(key, keyObj);
-    } else {
-        activeKeys[key]->updateState(isPressed);
-    }
+    // 更新 key[4] 数组
+    if (key == Qt::Key_D) key[0] = true;
+    if (key == Qt::Key_F) key[1] = true;
+    if (key == Qt::Key_J) key[2] = true;
+    if (key == Qt::Key_K) key[3] = true;
 
-    emit keyStateChanged(*activeKeys[key]);  // 发射信号，包含完整的Key对象
-
-
-//    qDebug() << "Key Pressed: " << keyText << " (" << key << ") at " << timestamp;
+    // qDebug() << "Key Pressed: " << event->text() << " (" << key << ")";
 }
 
 void MainWindow::keyReleaseEvent(QKeyEvent *event) {
@@ -92,17 +79,17 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event) {
         return;  // 忽略自动重复事件
 
     int key = event->key();
-    bool isPressed = false;
 
-    if (activeKeys.contains(key)) {
-        activeKeys[key]->updateState(isPressed);
-        emit keyStateChanged(*activeKeys[key]);  // 发射信号，包含完整的Key对象
+    // 更新 key[4] 数组
+    if (key == Qt::Key_D) key[0] = false;
+    if (key == Qt::Key_F) key[1] = false;
+    if (key == Qt::Key_J) key[2] = false;
+    if (key == Qt::Key_K) key[3] = false;
 
-        qDebug() << "Key Released: " << event->text() << " (" << key << ")"
-                 << "Pressed at: " << activeKeys[key]->getPressTimeStamp()
-                 << "Released at: " << activeKeys[key]->getReleaseTimeStamp();
-
-        delete activeKeys[key];
-        activeKeys.remove(key);
-    }
+    // qDebug() << "Key Released: " << event->text() << " (" << key << ")";
 }
+
+bool* MainWindow::outputKey() {
+    return key;
+}
+
