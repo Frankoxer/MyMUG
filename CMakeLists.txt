@@ -35,6 +35,11 @@ add_executable(MyMUG
         code/Common/NoteInfo.h
         code/ViewModel/PlayThread.cpp
         code/ViewModel/PlayThread.h
+        code/View/judgementLine.cpp
+        code/View/comboBlock.cpp
+        code/View/scoreblock.h
+        code/View/scoreBlock.cpp
+        code/View/scoreTitleBlock.cpp
 )
 
 target_link_libraries(MyMUG

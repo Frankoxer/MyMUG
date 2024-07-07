@@ -30,6 +30,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // 创建音轨和音符
     createTracks();
+    // 创建判定线
+    createJudgementLine();
     // createNotes();
     // noteBlocks.clear();
     // int startY = 800;
@@ -60,6 +62,13 @@ void MainWindow::createTracks() {
         tracks.append(track);
     }
 }
+
+void MainWindow::createJudgementLine(){
+    JudgementLine *judgementLine = new JudgementLine(this);
+    judgementLine->move(480, 750);
+}
+
+
 
 void MainWindow::recieveActiveNotes(std::vector<NoteInfo> *activeNotesPtr) {
     this->activeNotes = activeNotesPtr;
@@ -94,10 +103,29 @@ void MainWindow::createNotes() {
     // update();
 }
 
+void MainWindow::createComboBlock() {
+    ComboBlock *Combo = new ComboBlock(this);
+    Combo->move(0, 0);
+    Combo->show();
+}
 
+void MainWindow::createScoreBlock() {
+    ScoreBlock *Score = new ScoreBlock(this);
+    Score->move(1340, 0);
+    Score->show();
+}
+void MainWindow::createScoreTitleBlock() {
+    ScoreTitleBlock *scoreTitleBlock = new ScoreTitleBlock(this); // Create a new ScoreTitleBlock object
+    scoreTitleBlock->move(1140, 850); // Move the block to the specified position (x=1340, y=0)
+    scoreTitleBlock->setTitle("hobby"); // Set the title for the block
+    scoreTitleBlock->show(); // Display the block
+}
 void MainWindow::updateView() {
     // 重新创建音符
     createNotes();
+    createComboBlock();
+    createScoreBlock();
+    createScoreTitleBlock();
     // createTracks();
 }
 
