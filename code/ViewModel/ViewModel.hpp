@@ -34,6 +34,7 @@ public:
           gameStartTime(std::chrono::steady_clock::now()),
           keyFromViewPtr(nullptr),
           activeNotesPtr(nullptr),
+          pointPtr(nullptr),
           song(Song("", "", 0, std::vector<Note>(), 0)) {}
 
     void initialize(const std::string& songFile, bool* keyFromView) {
@@ -57,6 +58,7 @@ public:
 
         keyFromViewPtr = keyFromView;
         activeNotesPtr = &activeNotes;
+        pointPtr = &point;
     }
 
     void run() {
@@ -91,6 +93,7 @@ public:
     }
 
     std::vector<NoteInfo>* getActiveNotes() const { return activeNotesPtr; }
+    int* getPoint() const { return pointPtr; }
 
 signals:
     void updateView();
@@ -170,6 +173,7 @@ private:
     bool* keyFromViewPtr;
     std::vector<NoteInfo> activeNotes;
     std::vector<NoteInfo>* activeNotesPtr;
+    int* pointPtr;
 };
 
 
