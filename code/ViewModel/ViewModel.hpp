@@ -8,6 +8,7 @@
 #include <thread>
 #include <vector>
 #include <memory>
+#include <string>
 #include "Song.hpp"
 #include "Note.hpp"
 #include "../Common/Key.hpp"
@@ -35,9 +36,14 @@ public:
           keyFromViewPtr(nullptr),
           activeNotesPtr(nullptr),
           pointPtr(nullptr),
+          titlePtr(nullptr),
+          pngPathPtr(nullptr),
           song(Song("", "", 0, std::vector<Note>(), 0)) {}
 
-    void initialize(const std::string& songFile, bool* keyFromView) {
+    void initialize(const std::string& title, bool* keyFromView) {
+        string& songFile="";
+        songFile = "../resources/charts/" + title + ".json";
+        pngPath = "../resources/covers/" + title + ".png";
         std::ifstream file(songFile);
         if (!file.is_open()) {
             throw std::runtime_error("Failed to open file");
@@ -59,6 +65,8 @@ public:
         keyFromViewPtr = keyFromView;
         activeNotesPtr = &activeNotes;
         pointPtr = &point;
+        titlePtr = &title;
+        pngPathPtr = &pngPath;
     }
 
     void run() {
@@ -94,6 +102,8 @@ public:
 
     std::vector<NoteInfo>* getActiveNotes() const { return activeNotesPtr; }
     int* getPoint() const { return pointPtr; }
+    string* getTitle() const { return titlePtr; }
+    string* getPngPath() const { return pngPathPtr; }
 
 signals:
     void updateView();
@@ -174,6 +184,9 @@ private:
     std::vector<NoteInfo> activeNotes;
     std::vector<NoteInfo>* activeNotesPtr;
     int* pointPtr;
+    string* titlePtr;
+    string pngPath;
+    string* pngPathPtr;
 };
 
 
