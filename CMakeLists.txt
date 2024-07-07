@@ -40,6 +40,7 @@ add_executable(MyMUG
         code/View/scoreblock.h
         code/View/scoreBlock.cpp
         code/View/scoreTitleBlock.cpp
+        code/View/backgroundBlock.cpp
 )
 
 target_link_libraries(MyMUG

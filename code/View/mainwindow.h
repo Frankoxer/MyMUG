@@ -14,6 +14,7 @@
 #include "ComboBlock.h"
 #include "ScoreBlock.h"
 #include "scoreTitleBlock.h"
+#include "backgroundBlock.h"
 #include "../Common/Key.hpp"
 #include "../Common/NoteInfo.h"
 
@@ -56,7 +57,7 @@ private:
     std::vector<NoteInfo> *activeNotes;  // 用于存储activeNotesPtr
     bool keyFromView[4] = {false, false, false, false};  // 用于保存按键状态
 
-
+    void createBackground();
     void createTracks();
     void createJudgementLine();
     void createComboBlock();

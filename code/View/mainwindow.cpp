@@ -23,11 +23,9 @@ MainWindow::MainWindow(QWidget *parent) :
     QLabel *backgroundLabel = new QLabel(this);
     backgroundLabel->setGeometry(0, 0, 1440, 900);  // 设置 QLabel 大小与窗口一致
 //    QPixmap backgroundPixmap(":/background.png"); // 使用资源路径加载图片
-    QPixmap backgroundPixmap("../resources/covers/Chronostasis.png"); // 使用资源路径加载图片
-    backgroundLabel->setPixmap(backgroundPixmap);
-    backgroundLabel->setScaledContents(true);  // 使图片缩放填满整个 QLabel
-    backgroundLabel->lower();  // 将 QLabel 放置在底层
 
+
+    createBackground();
     // 创建音轨和音符
     createTracks();
     // 创建判定线
@@ -51,6 +49,17 @@ MainWindow::~MainWindow() {
     qDeleteAll(activeKeys);
     activeKeys.clear();
 }
+//QString path
+void MainWindow::createBackground(){
+//    QPixmap backgroundPixmap("../resources/covers/Chronostasis.png"); // 使用资源路径加载图片
+//    QPixmap backgroundPixmap("path"); // 使用资源路径加载图片
+//    backgroundLabel->setPixmap(backgroundPixmap);
+//    backgroundLabel->setScaledContents(true);  // 使图片缩放填满整个 QLabel
+//    backgroundLabel->lower();  // 将 QLabel 放置在底层
+    backgroundBlock *background = new backgroundBlock(this);
+    background->move(0, 0);
+}
+
 
 void MainWindow::createTracks() {
     int startX = 480;  // 起始 X 位置
@@ -122,6 +131,7 @@ void MainWindow::createScoreTitleBlock() {
 }
 void MainWindow::updateView() {
     // 重新创建音符
+//    createBackground();
     createNotes();
     createComboBlock();
     createScoreBlock();
