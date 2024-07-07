@@ -10,7 +10,6 @@
 #include <memory>
 #include <string>
 #include <windows.h>
-#pragma comment(lib,"WINMM.LIB")
 #include "Song.hpp"
 #include "Note.hpp"
 #include "../Common/Key.hpp"
@@ -23,10 +22,11 @@ const int HEIGHT = 900;
 const int LINE = 750;
 const int LEFTEST_TRACK = 480;
 const int WIDTH = 120;
-const int NOTE_HEIGHT = 20;
+const int NOTE_HEIGHT = 60;
 const int TIME_INTERVAL = 16;
-const int SPEED = 1;
-const int PERFECT_TIME = 80;
+const int SPEED = 3;
+const int PERFECT_TIME = 100;
+const int GOOD_TIME = 150;
 
 class ViewModel : public QObject{
     Q_OBJECT
@@ -44,16 +44,19 @@ public:
 
     void initialize(const std::string& songTitle, bool* keyFromView) {
         title = songTitle;
-        string& songFile="";
+        std::string songFile="";
         songFile = "../resources/charts/" + title + ".json";
-        pngPath = "../resources/covers/" + title + ".png";
+        // pngPath = "../resources/covers/" + title + ".png";
+        pngPath = QString::fromStdString("../resources/covers/" + title + ".png");
+        emit createBackground(pngPath);
+        emit createTracks();
+        emit createJudgementLine();
         std::ifstream file(songFile);
         if (!file.is_open()) {
             throw std::runtime_error("Failed to open file");
         }
 
         song = Song(file);
-        // song.ShowSong();
         notes = song.getNotes();
         if (notes.empty()) {
             throw std::runtime_error("No notes in the song");
@@ -69,26 +72,30 @@ public:
         activeNotesPtr = &activeNotes;
         pointPtr = &point;
         titlePtr = &title;
-        pngPathPtr = &pngPath;
+        // pngPathPtr = &pngPath;
     }
 
     void run() {
         auto it = notes.begin();
+        std::string songPath="";
+        songPath+="../resources/music/" + title + ".wav";
+        LPCSTR songPathChar = songPath.c_str();
+        PlaySound(TEXT(songPathChar), NULL, SND_FILENAME | SND_ASYNC);
         gameStartTime = std::chrono::steady_clock::now();
 
-        string songPath="";
-        songPath+="../resources/music/" + title + ".wav";
-        PlaySound(TEXT(songPath), NULL, SND_FILENAME | SND_ASYNC);
+        for(auto it: keys) {
+            it.updateStartTime(gameStartTime);
+        }
 
         while (true) {
             auto beforeLoopTime = std::chrono::steady_clock::now();
 
+            int isHit = 4;
             updateNotes(it);
-            updateKeyStates();
-            checkHits();
-            auto afterLoopTime = std::chrono::steady_clock::now();
-            std::this_thread::sleep_for(std::chrono::milliseconds(TIME_INTERVAL) - (afterLoopTime - beforeLoopTime));
-            // std::cout << activeNotes.size() << std::endl;
+            isHit = updateKeyStates();
+            if(isHit != 4) checkHits(isHit);
+
+
             // 检查是否到达乐曲结束时间，如果是，则退出循环
             auto currentTime = std::chrono::steady_clock::now();
             auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - gameStartTime).count();
@@ -99,6 +106,8 @@ public:
             if(activeNotesPtr == nullptr) {
                 std::cout << "activeNotesPtr is nullptr" << std::endl;
             }
+            auto afterLoopTime = std::chrono::steady_clock::now();
+            std::this_thread::sleep_for(std::chrono::milliseconds(TIME_INTERVAL) - (afterLoopTime - beforeLoopTime));
             emit updateView();
         }
     }
@@ -110,11 +119,15 @@ public:
 
     std::vector<NoteInfo>* getActiveNotes() const { return activeNotesPtr; }
     int* getPoint() const { return pointPtr; }
-    string* getTitle() const { return titlePtr; }
-    string* getPngPath() const { return pngPathPtr; }
+    std::string* getTitle() const { return titlePtr; }
+    std::string* getPngPath() const { return pngPathPtr; }
 
 signals:
     void updateView();
+    void updateScore(int newScore);
+    void createBackground(const QString pngPath);
+    void createTracks();
+    void createJudgementLine();
 
 private:
     void updateNotes(std::vector<Note>::iterator& it) {
@@ -138,50 +151,91 @@ private:
         }
     }
 
-    void updateKeyStates() {
+    // void updateKeyStates() {
+    //     for (int j = 0; j < 4; ++j) {
+    //         keys[j].updateState(keyFromViewPtr[j]);
+    //     }
+    // }
+    //
+    // void checkHits() {
+    //     auto currentTime = std::chrono::steady_clock::now();
+    //     int currentTimeStamp = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - gameStartTime).count();
+    //
+    //     for (auto i = activeNotes.begin(); i != activeNotes.end(); ++i) {
+    //         if (i->y > LINE - NOTE_HEIGHT && i->y < LINE+NOTE_HEIGHT-20) {
+    //             switch (i->x) {
+    //                 case 480:
+    //                     if (isPerfectHit(keys[0], currentTimeStamp)) {
+    //                         point += 100;
+    //                         std::cout << "Perfect hit in track 1!" << std::endl;
+    //                     }
+    //                     break;
+    //                 case 600:
+    //                     if (isPerfectHit(keys[1], currentTimeStamp)) {
+    //                         point += 100;
+    //                         std::cout << "Perfect hit in track 2!" << std::endl;
+    //                     }
+    //                     break;
+    //                 case 720:
+    //                     if (isPerfectHit(keys[2], currentTimeStamp)) {
+    //                         point += 100;
+    //                         std::cout << "Perfect hit in track 3!" << std::endl;
+    //                     }
+    //                     break;
+    //                 case 840:
+    //                     if (isPerfectHit(keys[3], currentTimeStamp)) {
+    //                         point += 100;
+    //                         std::cout << "Perfect hit in track 4!" << std::endl;
+    //                     }
+    //                     break;
+    //             }
+    //         } else {
+    //             break;
+    //         }
+    //     }
+    // }
+
+    int updateKeyStates() {
+        int result = 4;
+        bool result1= false;
         for (int j = 0; j < 4; ++j) {
-            keys[j].updateState(keyFromViewPtr[j]);
+            result1=keys[j].updateState(keyFromViewPtr[j]);
+            if (result1 && result==4) {
+                result = j;
+                break;
+            }
         }
+        return result;
     }
 
-    void checkHits() {
+    void checkHits(int track) {
         auto currentTime = std::chrono::steady_clock::now();
         int currentTimeStamp = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - gameStartTime).count();
 
-        for (auto i = activeNotes.begin(); i != activeNotes.end(); ++i) {
-            if (i->y > LINE - NOTE_HEIGHT && i->y < LINE) {
-                switch (i->x) {
-                    case 480:
-                        if (isPerfectHit(keys[0], currentTimeStamp)) {
-                            point += 100;
-                        }
-                        break;
-                    case 600:
-                        if (isPerfectHit(keys[1], currentTimeStamp)) {
-                            point += 100;
-                        }
-                        break;
-                    case 720:
-                        if (isPerfectHit(keys[2], currentTimeStamp)) {
-                            point += 100;
-                        }
-                        break;
-                    case 840:
-                        if (isPerfectHit(keys[3], currentTimeStamp)) {
-                            point += 100;
-                        }
-                        break;
-                }
-            } else {
+        for (auto i = notes.begin(); i != notes.end(); ++i) {
+            if (!i->isJudged && i->getTrack()==track+1 && std::abs(i->getTimestamp() - currentTimeStamp)<= PERFECT_TIME) {
+                point+= 100;
+                i->isJudged = true;
+                emit updateScore(point);
+                // std::cout << "Score: " << point << std::endl;
+                break;
+            } else if (!i->isJudged && i->getTrack()==track+1 && std::abs(i->getTimestamp() - currentTimeStamp)<= GOOD_TIME) {
+                point+= 75;
+                i->isJudged = true;
+                emit updateScore(point);
+                // std::cout << "Score: " << point << std::endl;
                 break;
             }
         }
     }
 
-    bool isPerfectHit(const Key& key, int currentTimeStamp) {
-        return key.getPressTimeStamp() - currentTimeStamp <= PERFECT_TIME &&
-               key.getReleaseTimeStamp() >= currentTimeStamp - PERFECT_TIME;
-    }
+    // bool isPerfectHit(const Key& key, int currentTimeStamp) {
+    //     // return key.getPressTimeStamp() - currentTimeStamp <= PERFECT_TIME
+    //     // &&
+    //     //        key.getPressTimeStamp() >= currentTimeStamp - PERFECT_TIME
+    //     // ;
+    //     return std::abs(key.getPressTimeStamp() - currentTimeStamp) <= PERFECT_TIME;
+    // }
 
     int point;
     Song song;
@@ -192,10 +246,10 @@ private:
     std::vector<NoteInfo> activeNotes;
     std::vector<NoteInfo>* activeNotesPtr;
     int* pointPtr;
-    string title;
-    string* titlePtr;
-    string pngPath;
-    string* pngPathPtr;
+    std::string title;
+    std::string* titlePtr;
+    QString pngPath;
+    std::string* pngPathPtr;
 };
 
 

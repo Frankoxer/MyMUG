@@ -11,6 +11,7 @@ public:
 
 protected:
     void paintEvent(QPaintEvent *event) override;
+    bool ispaint = false;
 };
 
 #endif //MYMUG_TRACK_H

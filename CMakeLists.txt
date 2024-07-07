@@ -47,6 +47,7 @@ target_link_libraries(MyMUG
         Qt5::Core
         Qt5::Gui
         Qt5::Widgets
+        winmm
 )
 
 if (WIN32 AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)

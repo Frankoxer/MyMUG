@@ -7,9 +7,9 @@
 
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
-    ViewModel viewModel;
-    MainWindow window;
-    GameApp gameApp(&window, &viewModel);
+    // ViewModel viewModel;
+    // MainWindow window;
+    GameApp gameApp;
     gameApp.Init();
 
     return app.exec();

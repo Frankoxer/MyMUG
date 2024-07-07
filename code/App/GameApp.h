@@ -14,7 +14,7 @@
 class GameApp : public QObject{
     Q_OBJECT
 public:
-    GameApp (MainWindow *mainWindow, ViewModel *viewModel) : mainWindow(mainWindow), viewModel(viewModel) {}
+    GameApp () {}
     void Init();
 private:
     MainWindow *mainWindow;

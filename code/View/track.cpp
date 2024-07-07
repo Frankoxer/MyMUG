@@ -6,6 +6,9 @@ Track::Track(QWidget *parent) : QWidget(parent) {
 }
 
 void Track::paintEvent(QPaintEvent *event) {
+    // if(ispaint) {
+    //     return;
+    // }
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
@@ -22,4 +25,6 @@ void Track::paintEvent(QPaintEvent *event) {
 //    painter.drawRoundedRect(0, 0, width(), height(), 10, 10);
 
     QWidget::paintEvent(event);
+
+    // ispaint = true;
 }

@@ -11,6 +11,8 @@ void noteBlock::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
+    // painter.eraseRect(rect());
+
     // 绘制音符
 //    painter.setBrush(Qt::blue);
     painter.setBrush(QColor(70, 130, 180, 245));

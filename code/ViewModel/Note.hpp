@@ -20,6 +20,7 @@ public:
     int timestamp;
     int track;
     Type type;
+    bool isJudged = false;
 };
 
 #endif //NOTE_H

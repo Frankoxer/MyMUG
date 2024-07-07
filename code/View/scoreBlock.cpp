@@ -10,10 +10,10 @@ void ScoreBlock::paintEvent(QPaintEvent *event) {
 
     // 绘制判定线背景
 //    painter.setBrush(Qt::darkBlue);
-    painter.setBrush(QColor(205,149,12,1));
+    painter.setBrush(QColor(205,149,12,255));
 
 
-    QPen pen(QColor(255, 255, 255,10));
+    QPen pen(QColor(255, 255, 255,255));
     painter.setPen(pen);
 
 
@@ -25,11 +25,13 @@ void ScoreBlock::paintEvent(QPaintEvent *event) {
     font.setPointSize(16);
     painter.setFont(font);
 
-    // 绘制 "Combo:" 文本
+    // 绘制 "Score:" 文本
     painter.drawText(QRect(0, 10, width(), 30), Qt::AlignCenter, "Score:");
 
     // 绘制数字 "1" 文本
-    painter.drawText(QRect(0, 50, width(), 30), Qt::AlignCenter, "1");
+
+    QString scoreStr = QString::number(score); // 将分数转换为字符串
+    painter.drawText(QRect(0, 50, width(), 30), Qt::AlignCenter, scoreStr);
 
     QWidget::paintEvent(event);
 }
