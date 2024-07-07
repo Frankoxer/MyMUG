@@ -12,8 +12,11 @@ void noteBlock::paintEvent(QPaintEvent *event) {
     painter.setRenderHint(QPainter::Antialiasing);
 
     // 绘制音符
-    painter.setBrush(Qt::blue);
-    painter.drawRect(0, 0, width(), height());
+//    painter.setBrush(Qt::blue);
+    painter.setBrush(QColor(70, 130, 180, 245));
+
+//    painter.drawRect(0, 0, width(), height());
+    painter.drawRoundedRect(0, 0, width(), height(), 9, 9);
 
     QWidget::paintEvent(event);
 }

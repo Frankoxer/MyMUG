@@ -2,13 +2,22 @@
 #define MYMUG_MAINWINDOW_H
 
 #include <QWidget>
+#include <QLabel>
+#include <QComboBox>
+#include <QVBoxLayout>
 #include <QKeyEvent>
-#include <QMap>
+#include <QVector>
 #include "track.h"
 #include "noteBlock.h"
 #include "KeyEvent.h"
+#include "judgementLine.h"
+#include "ComboBlock.h"
+#include "ScoreBlock.h"
+#include "scoreTitleBlock.h"
+#include "backgroundBlock.h"
 #include "../Common/Key.hpp"
 #include "../Common/NoteInfo.h"
+
 
 // typedef struct {
 //     int x;
@@ -48,7 +57,12 @@ private:
     std::vector<NoteInfo> *activeNotes;  // 用于存储activeNotesPtr
     bool keyFromView[4] = {false, false, false, false};  // 用于保存按键状态
 
+    void createBackground();
     void createTracks();
+    void createJudgementLine();
+    void createComboBlock();
+    void createScoreBlock();
+    void createScoreTitleBlock();
     void createNotes();
 };
 
