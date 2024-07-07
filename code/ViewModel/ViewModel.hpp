@@ -9,6 +9,8 @@
 #include <vector>
 #include <memory>
 #include <string>
+#include <windows.h>
+#pragma comment(lib,"WINMM.LIB")
 #include "Song.hpp"
 #include "Note.hpp"
 #include "../Common/Key.hpp"
@@ -40,7 +42,8 @@ public:
           pngPathPtr(nullptr),
           song(Song("", "", 0, std::vector<Note>(), 0)) {}
 
-    void initialize(const std::string& title, bool* keyFromView) {
+    void initialize(const std::string& songTitle, bool* keyFromView) {
+        title = songTitle;
         string& songFile="";
         songFile = "../resources/charts/" + title + ".json";
         pngPath = "../resources/covers/" + title + ".png";
@@ -72,6 +75,11 @@ public:
     void run() {
         auto it = notes.begin();
         gameStartTime = std::chrono::steady_clock::now();
+
+        string songPath="";
+        songPath+="../resources/music/" + title + ".wav";
+        PlaySound(TEXT(songPath), NULL, SND_FILENAME | SND_ASYNC);
+
         while (true) {
             auto beforeLoopTime = std::chrono::steady_clock::now();
 
@@ -184,6 +192,7 @@ private:
     std::vector<NoteInfo> activeNotes;
     std::vector<NoteInfo>* activeNotesPtr;
     int* pointPtr;
+    string title;
     string* titlePtr;
     string pngPath;
     string* pngPathPtr;
