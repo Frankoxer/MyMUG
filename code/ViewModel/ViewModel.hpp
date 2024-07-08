@@ -34,6 +34,7 @@ public:
     // explicit ViewModel(QObject *parent = nullptr);
     ViewModel()
         : point(0),
+          comb(0),
           gameStartTime(std::chrono::steady_clock::now()),
           keyFromViewPtr(nullptr),
           activeNotesPtr(nullptr),
@@ -93,11 +94,48 @@ public:
             int isHit = 4;
             updateNotes(it);
             isHit = updateKeyStates();
-            if(isHit != 4) checkHits(isHit);
+            if(isHit != 4) {
+                int track = isHit;
+                auto currentTime = std::chrono::steady_clock::now();
+                int currentTimeStamp = std::chrono::duration_cast<std::chrono::duration<long long, std::ratio<1, 1000>>>(currentTime - gameStartTime).count();
 
+                for (auto i = notes.begin(); i != notes.end(); ++i) {
+                    if (!i->isJudged && i->getTrack()==track+1 && abs(i->getTimestamp() - currentTimeStamp)<= PERFECT_TIME) {
+                        point+= 100;
+                        i->isJudged = true;
+                        comb++;
+                        std::cout<<comb<<std::endl;
+                        emit updateScore(point);
+                        // std::cout << "Score: " << point << std::endl;
+                        break;
+                    } else if (!i->isJudged && i->getTrack()==track+1 && abs(i->getTimestamp() - currentTimeStamp)<= GOOD_TIME) {
+                        point+= 75;
+                        comb++;
+                        std::cout<<comb<<std::endl;
+                        i->isJudged = true;
+                        emit updateScore(point);
+                        // std::cout << "Score: " << point << std::endl;
+                        break;
+                    }
+                }
+
+            }
+
+            //Check if any note has passed the judgement line without being hit
+            auto currentTime = std::chrono::steady_clock::now();
+            int currentTimeStamp = std::chrono::duration_cast<std::chrono::duration<long long, std::ratio<1, 1000>>>(currentTime - gameStartTime).count();
+            for (auto i = notes.begin(); i != notes.end(); ++i) {
+                if (!i->isJudged &&  currentTimeStamp - i->getTimestamp() > GOOD_TIME) {
+                    std::cout<<"????"<<std::endl;
+                    comb = 0; // Reset the comb count when a note is missed
+                    i->isJudged = true; // Mark the note as judged
+                    break;
+                    std::cout<<"Missed"<<std::endl;
+                }
+            }
 
             // 检查是否到达乐曲结束时间，如果是，则退出循环
-            auto currentTime = std::chrono::steady_clock::now();
+            currentTime = std::chrono::steady_clock::now();
             auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - gameStartTime).count();
             if (elapsedTime > song.getEndTime()) {
                 std::cout << "Song ended. Exiting game loop." << std::endl;
@@ -238,6 +276,7 @@ private:
     // }
 
     int point;
+    int comb;
     Song song;
     std::vector<Note> notes;
     std::chrono::time_point<std::chrono::steady_clock> gameStartTime;
