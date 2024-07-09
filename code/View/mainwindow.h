@@ -69,7 +69,6 @@ private:
     QList<Track*> tracks;
     QList<noteBlock*> noteBlocks;
     std::vector<NoteInfo> *activeNotes;  // 用于存储activeNotesPtr
-    bool keyFromView[4] = {false, false, false, false};  // 用于保存按键状态
     ScoreBlock *scoreBlock; // 分数块
     backgroundBlock *background; // 背景块
     ComboBlock *comboBlock; // Combo块

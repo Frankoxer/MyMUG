@@ -14,7 +14,6 @@ void ScoreTitleBlock::paintEvent(QPaintEvent *event) {
     painter.setRenderHint(QPainter::Antialiasing);
 
     // 绘制背景
-    painter.setBrush(QColor(0, 0, 0, 0)); // 背景颜色为黑色
     QPen pen(QColor(255, 255, 255, 0)); // 白色边框
     painter.setPen(pen);
 
