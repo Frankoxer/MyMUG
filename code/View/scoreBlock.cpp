@@ -8,17 +8,8 @@ void ScoreBlock::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
-    // 绘制判定线背景
-//    painter.setBrush(Qt::darkBlue);
-    painter.setBrush(QColor(205,149,12,0));
-
-
     QPen pen(QColor(255, 255, 255,0));
     painter.setPen(pen);
-
-
-//    painter.drawRect(0, 0, width(), height());
-    painter.drawRoundedRect(0, 0, width(), height(), 20, 20);
 
     // 绘制文本
     QFont font = painter.font();
