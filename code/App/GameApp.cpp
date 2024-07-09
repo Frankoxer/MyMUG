@@ -11,10 +11,12 @@ void GameApp::Init() {
     MainWindow *mainWindow = new MainWindow();
     ViewModel *viewModel = new ViewModel();
 
-    connect(viewModel, &ViewModel::updateView, mainWindow, &MainWindow::updateView);
+    connect(viewModel, &ViewModel::updateNoteView, mainWindow, &MainWindow::updateNotes);
     connect(viewModel, &ViewModel::updateScore, mainWindow, &MainWindow::updateScore);
+    connect(viewModel, &ViewModel::updateCombo, mainWindow, &MainWindow::updateCombo);
     connect(viewModel, &ViewModel::createBackground, mainWindow, &MainWindow::createBackground);
     connect(viewModel, &ViewModel::createTracks, mainWindow, &MainWindow::createTracks);
+    connect(viewModel, &ViewModel::createTitleBlock, mainWindow, &MainWindow::createScoreTitleBlock);
     connect(viewModel, &ViewModel::createJudgementLine, mainWindow, &MainWindow::createJudgementLine);
     mainWindow->show();
     viewModel->initialize("Chronostasis", mainWindow->outputKey());

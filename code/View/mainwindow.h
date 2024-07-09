@@ -40,9 +40,11 @@ public:
     std::vector<NoteInfo>* getActiveNotes() const { return activeNotes; }
 
 public slots:
-    void updateView();
+    void updateNotes();
     void updateScore(int score);
+    void updateCombo(int combo);
     void createBackground(const QString &pngPath);
+    void createScoreTitleBlock(const QString &title);
     void createTracks();
     void createJudgementLine();
 
@@ -62,12 +64,13 @@ private:
     bool keyFromView[4] = {false, false, false, false};  // 用于保存按键状态
     ScoreBlock *scoreBlock; // 分数块
     backgroundBlock *background; // 背景块
+    ComboBlock *comboBlock; // Combo块
 
     // void createBackground();
 
-    void createComboBlock();
+    void createComboBlock(int combo);
     void createScoreBlock(int score);
-    void createScoreTitleBlock();
+
     void createNotes();
 };
 

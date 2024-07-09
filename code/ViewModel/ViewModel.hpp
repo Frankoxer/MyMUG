@@ -45,13 +45,14 @@ public:
 
     void initialize(const std::string& songTitle, bool* keyFromView) {
         title = songTitle;
-        std::string songFile="";
+        std::string songFile;
         songFile = "../resources/charts/" + title + ".json";
         // pngPath = "../resources/covers/" + title + ".png";
         pngPath = QString::fromStdString("../resources/covers/" + title + ".png");
         emit createBackground(pngPath);
         emit createTracks();
         emit createJudgementLine();
+        emit createTitleBlock(QString::fromStdString(title));
         std::ifstream file(songFile);
         if (!file.is_open()) {
             throw std::runtime_error("Failed to open file");
@@ -76,82 +77,82 @@ public:
         // pngPathPtr = &pngPath;
     }
 
-    void run() {
-        auto it = notes.begin();
-        std::string songPath="";
-        songPath+="../resources/music/" + title + ".wav";
-        LPCSTR songPathChar = songPath.c_str();
-        PlaySound(TEXT(songPathChar), NULL, SND_FILENAME | SND_ASYNC);
-        gameStartTime = std::chrono::steady_clock::now();
-
-        for(auto it: keys) {
-            it.updateStartTime(gameStartTime);
-        }
-
-        while (true) {
-            auto beforeLoopTime = std::chrono::steady_clock::now();
-
-            int isHit = 4;
-            updateNotes(it);
-            isHit = updateKeyStates();
-            if(isHit != 4) {
-                int track = isHit;
-                auto currentTime = std::chrono::steady_clock::now();
-                int currentTimeStamp = std::chrono::duration_cast<std::chrono::duration<long long, std::ratio<1, 1000>>>(currentTime - gameStartTime).count();
-
-                for (auto i = notes.begin(); i != notes.end(); ++i) {
-                    if (!i->isJudged && i->getTrack()==track+1 && abs(i->getTimestamp() - currentTimeStamp)<= PERFECT_TIME) {
-                        point+= 100;
-                        i->isJudged = true;
-                        comb++;
-                        std::cout<<comb<<std::endl;
-                        emit updateScore(point);
-                        // std::cout << "Score: " << point << std::endl;
-                        break;
-                    } else if (!i->isJudged && i->getTrack()==track+1 && abs(i->getTimestamp() - currentTimeStamp)<= GOOD_TIME) {
-                        point+= 75;
-                        comb++;
-                        std::cout<<comb<<std::endl;
-                        i->isJudged = true;
-                        emit updateScore(point);
-                        // std::cout << "Score: " << point << std::endl;
-                        break;
-                    }
-                }
-
-            }
-
-            //Check if any note has passed the judgement line without being hit
-            auto currentTime = std::chrono::steady_clock::now();
-            int currentTimeStamp = std::chrono::duration_cast<std::chrono::duration<long long, std::ratio<1, 1000>>>(currentTime - gameStartTime).count();
-            for (auto i = notes.begin(); i != notes.end(); ++i) {
-                if (!i->isJudged &&  currentTimeStamp - i->getTimestamp() > GOOD_TIME) {
-                    std::cout<<"????"<<std::endl;
-                    comb = 0; // Reset the comb count when a note is missed
-                    i->isJudged = true; // Mark the note as judged
-                    break;
-                    std::cout<<"Missed"<<std::endl;
-                }
-            }
-
-            // 检查是否到达乐曲结束时间，如果是，则退出循环
-            currentTime = std::chrono::steady_clock::now();
-            auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - gameStartTime).count();
-            if (elapsedTime > song.getEndTime()) {
-                std::cout << "Song ended. Exiting game loop." << std::endl;
-                break;
-            }
-            if(activeNotesPtr == nullptr) {
-                std::cout << "activeNotesPtr is nullptr" << std::endl;
-            }
-            auto afterLoopTime = std::chrono::steady_clock::now();
-            std::this_thread::sleep_for(std::chrono::milliseconds(TIME_INTERVAL) - (afterLoopTime - beforeLoopTime));
-            emit updateView();
-        }
-    }
+    // void run() {
+    //     auto it = notes.begin();
+    //     std::string songPath="";
+    //     songPath+="../resources/music/" + title + ".wav";
+    //     LPCSTR songPathChar = songPath.c_str();
+    //     PlaySound(TEXT(songPathChar), NULL, SND_FILENAME | SND_ASYNC);
+    //     gameStartTime = std::chrono::steady_clock::now();
+    //
+    //     for(auto it: keys) {
+    //         it.updateStartTime(gameStartTime);
+    //     }
+    //
+    //     while (true) {
+    //         auto beforeLoopTime = std::chrono::steady_clock::now();
+    //
+    //         int isHit = 4;
+    //         updateNotes(it);
+    //         isHit = updateKeyStates();
+    //         if(isHit != 4) {
+    //             int track = isHit;
+    //             auto currentTime = std::chrono::steady_clock::now();
+    //             int currentTimeStamp = std::chrono::duration_cast<std::chrono::duration<long long, std::ratio<1, 1000>>>(currentTime - gameStartTime).count();
+    //
+    //             for (auto i = notes.begin(); i != notes.end(); ++i) {
+    //                 if (!i->isJudged && i->getTrack()==track+1 && abs(i->getTimestamp() - currentTimeStamp)<= PERFECT_TIME) {
+    //                     point+= 100;
+    //                     i->isJudged = true;
+    //                     comb++;
+    //                     emit updateCombo(comb);
+    //                     emit updateScore(point);
+    //                     // std::cout << "Score: " << point << std::endl;
+    //                     break;
+    //                 } else if (!i->isJudged && i->getTrack()==track+1 && abs(i->getTimestamp() - currentTimeStamp)<= GOOD_TIME) {
+    //                     point+= 75;
+    //                     comb++;
+    //                     emit updateCombo(comb);
+    //                     i->isJudged = true;
+    //                     emit updateScore(point);
+    //                     // std::cout << "Score: " << point << std::endl;
+    //                     break;
+    //                 }
+    //             }
+    //
+    //         }
+    //
+    //         //Check if any note has passed the judgement line without being hit
+    //         auto currentTime = std::chrono::steady_clock::now();
+    //         int currentTimeStamp = std::chrono::duration_cast<std::chrono::duration<long long, std::ratio<1, 1000>>>(currentTime - gameStartTime).count();
+    //         for (auto i = notes.begin(); i != notes.end(); ++i) {
+    //             if (!i->isJudged &&  currentTimeStamp - i->getTimestamp() > GOOD_TIME) {
+    //                 comb = 0; // Reset the comb count when a note is missed
+    //                 emit updateCombo(comb);
+    //                 i->isJudged = true; // Mark the note as judged
+    //                 break;
+    //                 std::cout<<"Missed"<<std::endl;
+    //             }
+    //         }
+    //
+    //         // 检查是否到达乐曲结束时间，如果是，则退出循环
+    //         currentTime = std::chrono::steady_clock::now();
+    //         auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - gameStartTime).count();
+    //         if (elapsedTime > song.getEndTime()) {
+    //             std::cout << "Song ended. Exiting game loop." << std::endl;
+    //             break;
+    //         }
+    //         if(activeNotesPtr == nullptr) {
+    //             std::cout << "activeNotesPtr is nullptr" << std::endl;
+    //         }
+    //         auto afterLoopTime = std::chrono::steady_clock::now();
+    //         std::this_thread::sleep_for(std::chrono::milliseconds(TIME_INTERVAL) - (afterLoopTime - beforeLoopTime));
+    //         emit updateNoteView();
+    //     }
+    // }
 
     void startGame() {
-        PlayThread *playThread = new PlayThread(this);
+        auto *playThread = new PlayThread(this);
         playThread->start();
     }
 
@@ -161,13 +162,15 @@ public:
     std::string* getPngPath() const { return pngPathPtr; }
 
 signals:
-    void updateView();
+    void updateNoteView();
     void updateScore(int newScore);
-    void createBackground(const QString pngPath);
+    void updateCombo(int newCombo);
+    void createBackground(QString pngPath);
+    void createTitleBlock(QString title);
     void createTracks();
     void createJudgementLine();
 
-private:
+public:
     void updateNotes(std::vector<Note>::iterator& it) {
         auto currentTime = std::chrono::steady_clock::now();
         auto timePassed = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - gameStartTime).count();
@@ -189,50 +192,6 @@ private:
         }
     }
 
-    // void updateKeyStates() {
-    //     for (int j = 0; j < 4; ++j) {
-    //         keys[j].updateState(keyFromViewPtr[j]);
-    //     }
-    // }
-    //
-    // void checkHits() {
-    //     auto currentTime = std::chrono::steady_clock::now();
-    //     int currentTimeStamp = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - gameStartTime).count();
-    //
-    //     for (auto i = activeNotes.begin(); i != activeNotes.end(); ++i) {
-    //         if (i->y > LINE - NOTE_HEIGHT && i->y < LINE+NOTE_HEIGHT-20) {
-    //             switch (i->x) {
-    //                 case 480:
-    //                     if (isPerfectHit(keys[0], currentTimeStamp)) {
-    //                         point += 100;
-    //                         std::cout << "Perfect hit in track 1!" << std::endl;
-    //                     }
-    //                     break;
-    //                 case 600:
-    //                     if (isPerfectHit(keys[1], currentTimeStamp)) {
-    //                         point += 100;
-    //                         std::cout << "Perfect hit in track 2!" << std::endl;
-    //                     }
-    //                     break;
-    //                 case 720:
-    //                     if (isPerfectHit(keys[2], currentTimeStamp)) {
-    //                         point += 100;
-    //                         std::cout << "Perfect hit in track 3!" << std::endl;
-    //                     }
-    //                     break;
-    //                 case 840:
-    //                     if (isPerfectHit(keys[3], currentTimeStamp)) {
-    //                         point += 100;
-    //                         std::cout << "Perfect hit in track 4!" << std::endl;
-    //                     }
-    //                     break;
-    //             }
-    //         } else {
-    //             break;
-    //         }
-    //     }
-    // }
-
     int updateKeyStates() {
         int result = 4;
         bool result1= false;
@@ -250,30 +209,20 @@ private:
         auto currentTime = std::chrono::steady_clock::now();
         int currentTimeStamp = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - gameStartTime).count();
 
-        for (auto i = notes.begin(); i != notes.end(); ++i) {
-            if (!i->isJudged && i->getTrack()==track+1 && std::abs(i->getTimestamp() - currentTimeStamp)<= PERFECT_TIME) {
+        for (auto & note : notes) {
+            if (!note.isJudged && note.getTrack()==track+1 && std::abs(note.getTimestamp() - currentTimeStamp)<= PERFECT_TIME) {
                 point+= 100;
-                i->isJudged = true;
+                note.isJudged = true;
                 emit updateScore(point);
-                // std::cout << "Score: " << point << std::endl;
                 break;
-            } else if (!i->isJudged && i->getTrack()==track+1 && std::abs(i->getTimestamp() - currentTimeStamp)<= GOOD_TIME) {
+            } else if (!note.isJudged && note.getTrack()==track+1 && std::abs(note.getTimestamp() - currentTimeStamp)<= GOOD_TIME) {
                 point+= 75;
-                i->isJudged = true;
+                note.isJudged = true;
                 emit updateScore(point);
-                // std::cout << "Score: " << point << std::endl;
                 break;
             }
         }
     }
-
-    // bool isPerfectHit(const Key& key, int currentTimeStamp) {
-    //     // return key.getPressTimeStamp() - currentTimeStamp <= PERFECT_TIME
-    //     // &&
-    //     //        key.getPressTimeStamp() >= currentTimeStamp - PERFECT_TIME
-    //     // ;
-    //     return std::abs(key.getPressTimeStamp() - currentTimeStamp) <= PERFECT_TIME;
-    // }
 
     int point;
     int comb;

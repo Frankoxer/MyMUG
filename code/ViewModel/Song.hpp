@@ -50,27 +50,4 @@ private:
     int endTime;
 };
 
-// Song::Song(std::ifstream &file) {
-//     nlohmann::json j;
-//     file >> j;
-//     title = j["title"];
-//     artist = j["artist"];
-//     bpm = j["bpm"];
-//     for (const auto& note : j["notes"]) {
-//         notes.emplace_back(note["timestamp"], note["track"], note["type"] == "Tap" ? Note::Tap : Note::Hold);
-//     }
-//     endTime = j["endTime"];
-// }
-
-// void Song::ShowSong () const {
-//     std::cout << "Title: " << title << std::endl;
-//     std::cout << "Artist: " << artist << std::endl;
-//     std::cout << "BPM: " << bpm << std::endl;
-//     std::cout << "Notes: " << std::endl;
-//     for (const auto& note : notes) {
-//         std::cout << "Timestamp: " << note.getTimestamp() << " Track: " << note.getTrack() << " Type: " << (note.getType() == Note::Tap ? "Tap" : "Hold") << std::endl;
-//     }
-// }
-
-
 #endif //SONG_H

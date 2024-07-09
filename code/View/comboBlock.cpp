@@ -9,15 +9,13 @@ void ComboBlock::paintEvent(QPaintEvent *event) {
     painter.setRenderHint(QPainter::Antialiasing);
 
     // 绘制判定线背景
-//    painter.setBrush(Qt::darkBlue);
-    painter.setBrush(QColor(205,149,12,1));
+    painter.setBrush(QColor(205,149,12,255));
 
 
-    QPen pen(QColor(255, 255, 255,10));
+    QPen pen(QColor(255, 255, 255,255));
     painter.setPen(pen);
 
 
-//    painter.drawRect(0, 0, width(), height());
     painter.drawRoundedRect(0, 0, width(), height(), 20, 20);
 
     // 绘制文本
@@ -29,7 +27,8 @@ void ComboBlock::paintEvent(QPaintEvent *event) {
     painter.drawText(QRect(0, 10, width(), 30), Qt::AlignCenter, "Combo:");
 
     // 绘制数字 "1" 文本
-    painter.drawText(QRect(0, 50, width(), 30), Qt::AlignCenter, "1");
+    QString comboStr = QString::number(combo); // 将分数转换为字符串
+    painter.drawText(QRect(0, 50, width(), 30), Qt::AlignCenter, comboStr);
 
     QWidget::paintEvent(event);
 }
