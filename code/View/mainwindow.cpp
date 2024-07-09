@@ -144,11 +144,23 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
 
     int key = event->key();
 
-    // 更新 keyFromView[4] 数组
-    if (key == Qt::Key_D) keyFromView[0] = true;
-    if (key == Qt::Key_F) keyFromView[1] = true;
-    if (key == Qt::Key_J) keyFromView[2] = true;
-    if (key == Qt::Key_K) keyFromView[3] = true;
+    // 更新 keyFromView[4] 数组并发射信号
+    if (key == Qt::Key_D) {
+        keyFromView[0] = true;
+        emit key0Pressed();
+    }
+    if (key == Qt::Key_F) {
+        keyFromView[1] = true;
+        emit key1Pressed();
+    }
+    if (key == Qt::Key_J) {
+        keyFromView[2] = true;
+        emit key2Pressed();
+    }
+    if (key == Qt::Key_K) {
+        keyFromView[3] = true;
+        emit key3Pressed();
+    }
 }
 
 void MainWindow::keyReleaseEvent(QKeyEvent *event) {
@@ -157,14 +169,27 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event) {
 
     int key = event->key();
 
-    // 更新 key[4] 数组
-    if (key == Qt::Key_D) keyFromView[0] = false;
-    if (key == Qt::Key_F) keyFromView[1] = false;
-    if (key == Qt::Key_J) keyFromView[2] = false;
-    if (key == Qt::Key_K) keyFromView[3] = false;
+    // 更新 keyFromView[4] 数组并发射信号
+    if (key == Qt::Key_D) {
+        keyFromView[0] = false;
+        emit key0Released();
+    }
+    if (key == Qt::Key_F) {
+        keyFromView[1] = false;
+        emit key1Released();
+    }
+    if (key == Qt::Key_J) {
+        keyFromView[2] = false;
+        emit key2Released();
+    }
+    if (key == Qt::Key_K) {
+        keyFromView[3] = false;
+        emit key3Released();
+    }
 }
 
 bool* MainWindow::outputKey() {
     return keyFromView;
 }
+
 
