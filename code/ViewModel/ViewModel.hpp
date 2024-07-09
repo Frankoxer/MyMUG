@@ -36,14 +36,13 @@ public:
         : point(0),
           comb(0),
           gameStartTime(std::chrono::steady_clock::now()),
-          keyFromViewPtr(nullptr),
           activeNotesPtr(nullptr),
           pointPtr(nullptr),
           titlePtr(nullptr),
           pngPathPtr(nullptr),
           song(Song("", "", 0, std::vector<Note>(), 0)) {}
 
-    void initialize(const std::string& songTitle, bool* keyFromView) {
+    void initialize(const std::string& songTitle) {
         title = songTitle;
         std::string songFile;
         songFile = "../resources/charts/" + title + ".json";
@@ -70,7 +69,6 @@ public:
         keys[2] = Key('j', false, gameStartTime, 0, 0);
         keys[3] = Key('k', false, gameStartTime, 0, 0);
 
-        keyFromViewPtr = keyFromView;
         activeNotesPtr = &activeNotes;
         pointPtr = &point;
         titlePtr = &title;
@@ -170,6 +168,39 @@ signals:
     void createTracks();
     void createJudgementLine();
 
+public slots:
+    void dIsPressed() {
+        keyFromView[0] = true;
+    }
+
+     void fIsPressed() {
+        keyFromView[1] = true;
+     }
+
+     void jIsPressed() {
+        keyFromView[2] = true;
+     }
+
+     void kIsPressed() {
+        keyFromView[3] = true;
+     }
+
+    void dIsReleased() {
+        keyFromView[0] = false;
+    }
+
+    void fIsReleased() {
+        keyFromView[1] = false;
+    }
+
+    void jIsReleased() {
+        keyFromView[2] = false;
+    }
+
+    void kIsReleased() {
+        keyFromView[3] = false;
+    }
+
 public:
     void updateNotes(std::vector<Note>::iterator& it) {
         auto currentTime = std::chrono::steady_clock::now();
@@ -196,7 +227,7 @@ public:
         int result = 4;
         bool result1= false;
         for (int j = 0; j < 4; ++j) {
-            result1=keys[j].updateState(keyFromViewPtr[j]);
+            result1=keys[j].updateState(keyFromView[j]);
             if (result1 && result==4) {
                 result = j;
                 break;
@@ -227,10 +258,10 @@ public:
     int point;
     int comb;
     Song song;
+    bool keyFromView[4] = {false, false, false, false};
     std::vector<Note> notes;
     std::chrono::time_point<std::chrono::steady_clock> gameStartTime;
     Key keys[4];
-    bool* keyFromViewPtr;
     std::vector<NoteInfo> activeNotes;
     std::vector<NoteInfo>* activeNotesPtr;
     int* pointPtr;
