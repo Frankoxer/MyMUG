@@ -11,6 +11,7 @@ class NoteInfo {
 public:
     int x;
     int y;
+    bool visible = true;
 };
 
 

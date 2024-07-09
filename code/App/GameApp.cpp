@@ -18,8 +18,17 @@ void GameApp::Init() {
     connect(viewModel, &ViewModel::createTracks, mainWindow, &MainWindow::createTracks);
     connect(viewModel, &ViewModel::createTitleBlock, mainWindow, &MainWindow::createScoreTitleBlock);
     connect(viewModel, &ViewModel::createJudgementLine, mainWindow, &MainWindow::createJudgementLine);
+    connect(mainWindow, &MainWindow::key0Pressed, viewModel, &ViewModel::dIsPressed);
+    connect(mainWindow, &MainWindow::key1Pressed, viewModel, &ViewModel::fIsPressed);
+    connect(mainWindow, &MainWindow::key2Pressed, viewModel, &ViewModel::jIsPressed);
+    connect(mainWindow, &MainWindow::key3Pressed, viewModel, &ViewModel::kIsPressed);
+    connect(mainWindow, &MainWindow::key0Released, viewModel, &ViewModel::dIsReleased);
+    connect(mainWindow, &MainWindow::key1Released, viewModel, &ViewModel::fIsReleased);
+    connect(mainWindow, &MainWindow::key2Released, viewModel, &ViewModel::jIsReleased);
+    connect(mainWindow, &MainWindow::key3Released, viewModel, &ViewModel::kIsReleased);
+
     mainWindow->show();
-    viewModel->initialize("Chronostasis", mainWindow->outputKey());
+    viewModel->initialize("Chronostasis");
     mainWindow->setActiveNotes(viewModel->getActiveNotes());
 
 

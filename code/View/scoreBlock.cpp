@@ -10,10 +10,10 @@ void ScoreBlock::paintEvent(QPaintEvent *event) {
 
     // 绘制判定线背景
 //    painter.setBrush(Qt::darkBlue);
-    painter.setBrush(QColor(205,149,12,255));
+    painter.setBrush(QColor(205,149,12,0));
 
 
-    QPen pen(QColor(255, 255, 255,255));
+    QPen pen(QColor(255, 255, 255,0));
     painter.setPen(pen);
 
 
@@ -22,6 +22,7 @@ void ScoreBlock::paintEvent(QPaintEvent *event) {
 
     // 绘制文本
     QFont font = painter.font();
+    painter.setPen(Qt::white);
     font.setPointSize(16);
     painter.setFont(font);
 

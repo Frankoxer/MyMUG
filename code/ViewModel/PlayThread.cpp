@@ -35,15 +35,18 @@ void PlayThread::run() {
                     if (!note.isJudged && note.getTrack()==track+1 && abs(note.getTimestamp() - currentTimeStamp)<= PERFECT_TIME) {
                         viewModel->point+= 100;
                         note.isJudged = true;
+                        note.visible = false;
                         viewModel->comb++;
+                        // PlaySound(TEXT("../resources/sounds/tapsound.wav"), nullptr, SND_FILENAME | SND_ASYNC);
                         emit viewModel->updateCombo(viewModel->comb);
                         emit viewModel->updateScore(viewModel->point);
                         break;
                     } else if (!note.isJudged && note.getTrack()==track+1 && abs(note.getTimestamp() - currentTimeStamp)<= GOOD_TIME) {
                         viewModel->point+= 75;
+                        note.isJudged = true;
+                        note.visible = false;
                         viewModel->comb++;
                         emit viewModel->updateCombo(viewModel->comb);
-                        note.isJudged = true;
                         emit viewModel->updateScore(viewModel->point);
                         break;
                     }

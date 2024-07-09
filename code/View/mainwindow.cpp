@@ -56,7 +56,7 @@ void MainWindow::createTracks() {
 
 void MainWindow::createJudgementLine(){
     auto *judgementLine = new JudgementLine(this);
-    judgementLine->move(480, 750);
+    judgementLine->move(480, 800);
     judgementLine->show();
 }
 
@@ -79,11 +79,14 @@ void MainWindow::createNotes() {
         qDeleteAll( noteBlocks );
         noteBlocks.clear();
         for ( auto noteInfo : *activeNotes ) {
-            int trackIndex = (noteInfo.x / 120) - 4; // 计算轨道索引
-            auto *note = new noteBlock(tracks[trackIndex], trackIndex, noteInfo.y);
-            note->move(0 ,noteInfo.y);
-            noteBlocks.append(note);
-            note->show();
+            if(noteInfo.visible) {
+                int trackIndex = (noteInfo.x / 120) - 4; // 计算轨道索引
+                auto *note = new noteBlock(tracks[trackIndex], trackIndex, noteInfo.y);
+                note->move(0 ,noteInfo.y);
+                noteBlocks.append(note);
+                note->show();
+            }
+
         }
     }
     update();
@@ -96,10 +99,10 @@ void MainWindow::createComboBlock(int combo) {
         delete comboBlock;
         comboBlock = nullptr;
     }
-
+    if(combo == 0) return ;
     comboBlock = new ComboBlock(this);
     comboBlock->setCombo(combo);
-    comboBlock->move(0, 0);
+    comboBlock->move(200, 300);
     comboBlock->show();
 }
 
@@ -113,13 +116,13 @@ void MainWindow::createScoreBlock(int score) {
 
     scoreBlock = new ScoreBlock(this);
     scoreBlock->setScore(score);
-    scoreBlock->move(1140, 200);
+    scoreBlock->move(1140, 300);
     scoreBlock->show();
 }
 
 void MainWindow::createScoreTitleBlock(const QString &title) {
     auto *scoreTitleBlock = new ScoreTitleBlock(this); // Create a new ScoreTitleBlock object
-    scoreTitleBlock->move(1140, 850); // Move the block to the specified position (x=1340, y=0)
+    scoreTitleBlock->move(1140, 830); // Move the block to the specified position (x=1340, y=0)
     scoreTitleBlock->setTitle(title); // Set the title for the block
     scoreTitleBlock->show(); // Display the block
 }

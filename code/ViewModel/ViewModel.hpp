@@ -25,8 +25,8 @@ const int WIDTH = 120;
 const int NOTE_HEIGHT = 60;
 const int TIME_INTERVAL = 16;
 const int SPEED = 3;
-const int PERFECT_TIME = 100;
-const int GOOD_TIME = 150;
+const int PERFECT_TIME = 80;
+const int GOOD_TIME = 120;
 
 class ViewModel : public QObject{
     Q_OBJECT
@@ -46,7 +46,6 @@ public:
         title = songTitle;
         std::string songFile;
         songFile = "../resources/charts/" + title + ".json";
-        // pngPath = "../resources/covers/" + title + ".png";
         pngPath = QString::fromStdString("../resources/covers/" + title + ".png");
         emit createBackground(pngPath);
         emit createTracks();
@@ -218,7 +217,7 @@ public:
                 break;
             }
 
-            NoteInfo noteInfo = {x, y};
+            NoteInfo noteInfo = {x, y, i->visible};
             activeNotes.push_back(noteInfo);
         }
     }
@@ -236,24 +235,26 @@ public:
         return result;
     }
 
-    void checkHits(int track) {
-        auto currentTime = std::chrono::steady_clock::now();
-        int currentTimeStamp = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - gameStartTime).count();
-
-        for (auto & note : notes) {
-            if (!note.isJudged && note.getTrack()==track+1 && std::abs(note.getTimestamp() - currentTimeStamp)<= PERFECT_TIME) {
-                point+= 100;
-                note.isJudged = true;
-                emit updateScore(point);
-                break;
-            } else if (!note.isJudged && note.getTrack()==track+1 && std::abs(note.getTimestamp() - currentTimeStamp)<= GOOD_TIME) {
-                point+= 75;
-                note.isJudged = true;
-                emit updateScore(point);
-                break;
-            }
-        }
-    }
+    // void checkHits(int track) {
+    //     auto currentTime = std::chrono::steady_clock::now();
+    //     int currentTimeStamp = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - gameStartTime).count();
+    //
+    //     for (auto & note : notes) {
+    //         if (!note.isJudged && note.getTrack()==track+1 && std::abs(note.getTimestamp() - currentTimeStamp)<= PERFECT_TIME) {
+    //             point+= 100;
+    //             note.isJudged = true;
+    //             // note.visible = false;
+    //             emit updateScore(point);
+    //             break;
+    //         } else if (!note.isJudged && note.getTrack()==track+1 && std::abs(note.getTimestamp() - currentTimeStamp)<= GOOD_TIME) {
+    //             point+= 75;
+    //             note.isJudged = true;
+    //             // note.visible = false;
+    //             emit updateScore(point);
+    //             break;
+    //         }
+    //     }
+    // }
 
     int point;
     int comb;

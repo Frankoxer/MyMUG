@@ -54,6 +54,14 @@ protected:
 
 signals:
     void keyStateChanged(const Key &key);
+    void key0Pressed();
+    void key1Pressed();
+    void key2Pressed();
+    void key3Pressed();
+    void key0Released();
+    void key1Released();
+    void key2Released();
+    void key3Released();
 
 private:
     Ui::MainWindow *ui;

@@ -21,6 +21,7 @@ public:
     int track;
     Type type;
     bool isJudged = false;
+    bool visible = true;
 };
 
 #endif //NOTE_H

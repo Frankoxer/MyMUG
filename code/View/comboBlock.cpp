@@ -9,10 +9,10 @@ void ComboBlock::paintEvent(QPaintEvent *event) {
     painter.setRenderHint(QPainter::Antialiasing);
 
     // 绘制判定线背景
-    painter.setBrush(QColor(205,149,12,255));
+    painter.setBrush(QColor(205,149,12,0));
 
 
-    QPen pen(QColor(255, 255, 255,255));
+    QPen pen(QColor(255, 255, 255,0));
     painter.setPen(pen);
 
 
@@ -21,6 +21,7 @@ void ComboBlock::paintEvent(QPaintEvent *event) {
     // 绘制文本
     QFont font = painter.font();
     font.setPointSize(16);
+    painter.setPen(Qt::white);
     painter.setFont(font);
 
     // 绘制 "Combo:" 文本

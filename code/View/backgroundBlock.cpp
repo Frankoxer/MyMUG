@@ -17,17 +17,13 @@ backgroundBlock::backgroundBlock(QWidget *parent)
 }
 
 void backgroundBlock::setBackgroundPath(const QString &backgroundPath) {
-    std::cout << "setting background path" << std::endl;
+    // std::cout << "setting background path" << std::endl;
     m_backgroundPath = backgroundPath;
 }
 
 
 void backgroundBlock::paintEvent(QPaintEvent *event)
 {
-    // if(m_painted) {
-    //     return;
-    // }
-    // std::cout << "painting background" << std::endl;
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
