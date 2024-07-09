@@ -28,7 +28,7 @@ void GameApp::Init() {
     connect(mainWindow, &MainWindow::key3Released, viewModel, &ViewModel::kIsReleased);
 
     mainWindow->show();
-    viewModel->initialize("Chronostasis");
+    viewModel->initialize("Cyaegha");
     mainWindow->setActiveNotes(viewModel->getActiveNotes());
 
 

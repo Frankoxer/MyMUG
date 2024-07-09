@@ -1,7 +1,7 @@
 #include "ComboBlock.h"
 
 ComboBlock::ComboBlock(QWidget *parent) : QWidget(parent) {
-    setFixedSize(100, 100); // 设置判定线的大小
+    setFixedSize(250, 320);
 }
 
 void ComboBlock::paintEvent(QPaintEvent *event) {
@@ -13,17 +13,19 @@ void ComboBlock::paintEvent(QPaintEvent *event) {
 
 
     // 绘制文本
-    QFont font = painter.font();
-    font.setPointSize(16);
+    QFont font("Verdana", 16);
     painter.setPen(Qt::white);
     painter.setFont(font);
 
     // 绘制 "Combo:" 文本
-    painter.drawText(QRect(0, 10, width(), 30), Qt::AlignCenter, "Combo:");
+    painter.drawText(QRect(0, 10, width(), 30), Qt::AlignCenter, "Combo");
 
-    // 绘制数字 "1" 文本
+    // 绘制 combo 文本
+    font.setPointSize(48);
+    font.setWeight(QFont::Bold);
+    painter.setFont(font);
     QString comboStr = QString::number(combo); // 将分数转换为字符串
-    painter.drawText(QRect(0, 50, width(), 30), Qt::AlignCenter, comboStr);
+    painter.drawText(QRect(0, 80, width(), 90), Qt::AlignCenter, comboStr);
 
     QWidget::paintEvent(event);
 }

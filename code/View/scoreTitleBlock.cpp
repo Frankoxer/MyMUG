@@ -21,13 +21,12 @@ void ScoreTitleBlock::paintEvent(QPaintEvent *event) {
     painter.drawRect(0, 0, width(), height());
 
     // 绘制文本
-    QFont font = painter.font();
-    font.setPointSize(16);
-    painter.setFont(font);
+    QFont font("Verdana", 16);
     painter.setPen(Qt::white);
+    painter.setFont(font);
 
     // 绘制乐谱名称
-    painter.drawText(QRect(0, 0, width(), height()), Qt::AlignCenter, title);
+    painter.drawText(QRect(0, 0, width(), height()), Qt::AlignRight, title);
 
     QWidget::paintEvent(event);
 }

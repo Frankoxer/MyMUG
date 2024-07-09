@@ -37,7 +37,6 @@ void PlayThread::run() {
                         note.isJudged = true;
                         note.visible = false;
                         viewModel->comb++;
-                        // PlaySound(TEXT("../resources/sounds/tapsound.wav"), nullptr, SND_FILENAME | SND_ASYNC);
                         emit viewModel->updateCombo(viewModel->comb);
                         emit viewModel->updateScore(viewModel->point);
                         break;

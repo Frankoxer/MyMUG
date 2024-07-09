@@ -15,7 +15,7 @@ protected:
     void paintEvent(QPaintEvent *event) override;
 
 private:
-    int combo=0;
+    int combo = 0;
 };
 
 #endif // ComboBlock_H

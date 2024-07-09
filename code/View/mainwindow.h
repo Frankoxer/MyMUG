@@ -18,12 +18,6 @@
 #include "../Common/Key.hpp"
 #include "../Common/NoteInfo.h"
 
-
-// typedef struct {
-//     int x;
-//     int y;
-// } NoteInfo;
-
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -69,15 +63,12 @@ private:
     QList<Track*> tracks;
     QList<noteBlock*> noteBlocks;
     std::vector<NoteInfo> *activeNotes;  // 用于存储activeNotesPtr
-    ScoreBlock *scoreBlock; // 分数块
+    ScoreBlock *scoreBlock = nullptr; // 分数块
     backgroundBlock *background; // 背景块
-    ComboBlock *comboBlock; // Combo块
-
-    // void createBackground();
+    ComboBlock *comboBlock = nullptr; // Combo块
 
     void createComboBlock(int combo);
     void createScoreBlock(int score);
-
     void createNotes();
 };
 

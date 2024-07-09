@@ -14,15 +14,15 @@ MainWindow::MainWindow(QWidget *parent) :
     // 设置固定窗口大小
     setFixedSize(1440, 900);
 
-    scoreBlock = new ScoreBlock(this);
-    scoreBlock->setScore(0);
-    scoreBlock->move(1140, 200);
-    scoreBlock->show();
-
-    comboBlock = new ComboBlock(this);
-    comboBlock->setCombo(0);
-    comboBlock->move(0, 0);
-    comboBlock->show();
+    // scoreBlock = new ScoreBlock(this);
+    // scoreBlock->setScore(0);
+    // scoreBlock->move(1140, 200);
+    // scoreBlock->show();
+    //
+    // comboBlock = new ComboBlock(this);
+    // comboBlock->setCombo(0);
+    // comboBlock->move(0, 0);
+    // comboBlock->show();
 
 }
 
@@ -33,6 +33,7 @@ MainWindow::~MainWindow() {
     qDeleteAll(activeKeys);
     activeKeys.clear();
 }
+
 //QString path
 void MainWindow::createBackground(const QString &pngPath) {
     background = new backgroundBlock(this);
@@ -40,7 +41,6 @@ void MainWindow::createBackground(const QString &pngPath) {
     background->move(0, 0);
     background->show();
 }
-
 
 void MainWindow::createTracks() {
     int startX = 480;  // 起始 X 位置
@@ -56,10 +56,9 @@ void MainWindow::createTracks() {
 
 void MainWindow::createJudgementLine(){
     auto *judgementLine = new JudgementLine(this);
-    judgementLine->move(480, 800);
+    judgementLine->move(480, 770);
     judgementLine->show();
 }
-
 
 
 void MainWindow::recieveActiveNotes(std::vector<NoteInfo> *activeNotesPtr) {
@@ -94,35 +93,41 @@ void MainWindow::createNotes() {
 
 void MainWindow::createComboBlock(int combo) {
     // 先把原来的连击块删除
-    if (comboBlock != nullptr) {
-        comboBlock->hide();
+
+        // comboBlock->hide();
+
+    if(comboBlock != nullptr) {
         delete comboBlock;
-        comboBlock = nullptr;
+        comboBlock = nullptr; // Prevent double deletion and invalid access
     }
+        // comboBlock = nullptr;
+
     if(combo == 0) return ;
     comboBlock = new ComboBlock(this);
     comboBlock->setCombo(combo);
-    comboBlock->move(200, 300);
+    comboBlock->move(150, 300);
     comboBlock->show();
 }
 
 void MainWindow::createScoreBlock(int score) {
     // 先把原来的分数块删除
-    if (scoreBlock != nullptr) {
-        scoreBlock->hide();
+
+    if(scoreBlock != nullptr) {
         delete scoreBlock;
-        scoreBlock = nullptr;
+        scoreBlock = nullptr; // Prevent double deletion and invalid access
     }
+        // scoreBlock->hide(
+
 
     scoreBlock = new ScoreBlock(this);
     scoreBlock->setScore(score);
-    scoreBlock->move(1140, 300);
+    scoreBlock->move(1300, 0);
     scoreBlock->show();
 }
 
 void MainWindow::createScoreTitleBlock(const QString &title) {
     auto *scoreTitleBlock = new ScoreTitleBlock(this); // Create a new ScoreTitleBlock object
-    scoreTitleBlock->move(1140, 830); // Move the block to the specified position (x=1340, y=0)
+    scoreTitleBlock->move(1090, 830); // Move the block to the specified position (x=1340, y=0)
     scoreTitleBlock->setTitle(title); // Set the title for the block
     scoreTitleBlock->show(); // Display the block
 }
@@ -138,6 +143,7 @@ void MainWindow::updateScore(int newScore) {
 }
 
 void MainWindow::updateCombo(int newCombo) {
+    // 更新连击数
     createComboBlock(newCombo);
 }
 
@@ -149,6 +155,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
 
     // 更新 keyFromView[4] 数组并发射信号
     if (key == Qt::Key_D) {
+        // std::cout << "Key D Pressed" << std::endl;
         emit key0Pressed();
     }
     if (key == Qt::Key_F) {

@@ -27,8 +27,6 @@ add_executable(MyMUG
         code/View/noteBlock.cpp
         code/View/noteBlock.h
         code/View/KeyEvent.h
-#        resource.qrc
-#        ${RESOURCES}
         code/ViewModel/ViewModel.hpp
         code/App/GameApp.cpp
         code/App/GameApp.h
