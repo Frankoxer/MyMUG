@@ -6,8 +6,6 @@
 #include <QDateTime>
 #include <iostream>
 #include <chrono>
-#include <QSound>
-#include <QDir>
 
 MainWindow::MainWindow(QWidget *parent) :
         QWidget(parent), ui(new Ui::MainWindow) {
@@ -15,6 +13,16 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // 设置固定窗口大小
     setFixedSize(1440, 900);
+
+    // scoreBlock = new ScoreBlock(this);
+    // scoreBlock->setScore(0);
+    // scoreBlock->move(1140, 200);
+    // scoreBlock->show();
+    //
+    // comboBlock = new ComboBlock(this);
+    // comboBlock->setCombo(0);
+    // comboBlock->move(0, 0);
+    // comboBlock->show();
 
 }
 
@@ -48,12 +56,8 @@ void MainWindow::createTracks() {
 
 void MainWindow::createJudgementLine(){
     auto *judgementLine = new JudgementLine(this);
-    judgementLine->move(480, 750);
+    judgementLine->move(480, 770);
     judgementLine->show();
-}
-
-void MainWindow::playtapsound() {
-    QSound::play("../resources/sounds/tapsound.wav");
 }
 
 
@@ -117,7 +121,7 @@ void MainWindow::createScoreBlock(int score) {
 
     scoreBlock = new ScoreBlock(this);
     scoreBlock->setScore(score);
-    scoreBlock->move(1200, 0);
+    scoreBlock->move(1300, 0);
     scoreBlock->show();
 }
 

@@ -25,7 +25,6 @@ void PlayThread::run() {
 
             int isHit = 4;
             viewModel->updateNotes(it);
-            emit viewModel->updateNoteView();
             isHit = viewModel->updateKeyStates();
             if(isHit != 4) {
                 int track = isHit;
@@ -38,7 +37,6 @@ void PlayThread::run() {
                         note.isJudged = true;
                         note.visible = false;
                         viewModel->comb++;
-                        emit viewModel->playtapsound();
                         emit viewModel->updateCombo(viewModel->comb);
                         emit viewModel->updateScore(viewModel->point);
                         break;
@@ -47,7 +45,6 @@ void PlayThread::run() {
                         note.isJudged = true;
                         note.visible = false;
                         viewModel->comb++;
-                        emit viewModel->playtapsound();
                         emit viewModel->updateCombo(viewModel->comb);
                         emit viewModel->updateScore(viewModel->point);
                         break;
@@ -80,7 +77,7 @@ void PlayThread::run() {
             }
             auto afterLoopTime = std::chrono::steady_clock::now();
             std::this_thread::sleep_for(std::chrono::milliseconds(TIME_INTERVAL) - (afterLoopTime - beforeLoopTime));
-
+            emit viewModel->updateNoteView();
         }
     }
 }

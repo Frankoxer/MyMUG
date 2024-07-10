@@ -41,7 +41,6 @@ public slots:
     void createScoreTitleBlock(const QString &title);
     void createTracks();
     void createJudgementLine();
-    void playtapsound();
 
 protected:
     void keyPressEvent(QKeyEvent *event) override;

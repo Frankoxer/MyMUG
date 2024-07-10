@@ -47,7 +47,6 @@ public:
         std::string songFile;
         songFile = "../resources/charts/" + title + ".json";
         pngPath = QString::fromStdString("../resources/covers/" + title + ".png");
-        musicPath = QString::fromStdString("../resources/music/" + title + ".wav");
         emit createBackground(pngPath);
         emit createTracks();
         emit createJudgementLine();
@@ -92,7 +91,6 @@ signals:
     void createTitleBlock(QString title);
     void createTracks();
     void createJudgementLine();
-    void playtapsound();
 
 public slots:
     void dIsPressed() {
@@ -178,7 +176,6 @@ public:
     std::string title;
     std::string* titlePtr;
     QString pngPath;
-    QString musicPath;
     std::string* pngPathPtr;
 };
 
