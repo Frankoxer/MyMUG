@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/sounds">
+        <file>../../resources/sounds/tapsound.wav</file>
+    </qresource>
+</RCC>

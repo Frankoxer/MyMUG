@@ -1,7 +1,7 @@
 #include "ScoreBlock.h"
 
 ScoreBlock::ScoreBlock(QWidget *parent) : QWidget(parent) {
-    setFixedSize(100, 100);
+    setFixedSize(200, 150);
 }
 
 void ScoreBlock::paintEvent(QPaintEvent *event) {
@@ -22,7 +22,7 @@ void ScoreBlock::paintEvent(QPaintEvent *event) {
 
     // 绘制 score 文本
     QString scoreStr = QString::number(score); // 将分数转换为字符串
-    painter.drawText(QRect(0, 20, width(), 30), Qt::AlignRight, scoreStr);
+    painter.drawText(QRect(0, 15, width(), 35), Qt::AlignRight, scoreStr);
 
     QWidget::paintEvent(event);
 }

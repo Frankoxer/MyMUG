@@ -12,10 +12,13 @@ find_package(Qt5 COMPONENTS
         Core
         Gui
         Widgets
+        Multimedia
+        MultimediaWidgets
+        MultimediaQuick
         REQUIRED)
 
 # 添加资源文件
-#qt5_add_resources(RESOURCES code/View/resource.qrc)
+qt5_add_resources(RESOURCES code/View/resources.qrc)
 
 add_executable(MyMUG
         main.cpp
@@ -45,6 +48,9 @@ target_link_libraries(MyMUG
         Qt5::Core
         Qt5::Gui
         Qt5::Widgets
+        Qt5::Multimedia
+        Qt5::MultimediaWidgets
+        Qt5::MultimediaQuick
         winmm
 )
 
