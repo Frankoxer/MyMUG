@@ -22,7 +22,7 @@ public:
         title = j["title"];
         endTime = j["endTime"];
         for (auto& note : j["notes"]) {
-            notes.emplace_back(note["timestamp"].get<int>()+240, note["key"], note["type"] == "Tap" ? Note::Tap : Note::Hold);
+            notes.emplace_back(note["timestamp"].get<int>()-320, note["key"], note["type"] == "Tap" ? Note::Tap : Note::Hold);
         }
 
     }

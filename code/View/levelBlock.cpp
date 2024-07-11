@@ -1,7 +1,7 @@
 #include "levelBlock.h"
 
 levelBlock::levelBlock(QWidget *parent) : QWidget(parent) {
-    setFixedSize(50, 50); // 设置 levelBlock 的大小
+    setFixedSize(200, 200); // 设置 levelBlock 的大小
 }
 
 void levelBlock::setLevel(const QString &level_char) {
@@ -21,12 +21,12 @@ void levelBlock::paintEvent(QPaintEvent *event) {
     painter.drawRect(0, 0, width(), height());
 
     // 绘制文本
-    QFont font("Verdana", 16);
+    QFont font("Verdana", 60);
     painter.setPen(Qt::white);
     painter.setFont(font);
 
     // 绘制乐谱名称
-    painter.drawText(QRect(0, 0, width(), height()), Qt::AlignRight, level);
+    painter.drawText(QRect(0, 5, width(), 80), Qt::AlignCenter, level);
 
     QWidget::paintEvent(event);
 }

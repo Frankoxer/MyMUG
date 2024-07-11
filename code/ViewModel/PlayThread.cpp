@@ -42,6 +42,10 @@ void PlayThread::run() {
                         emit viewModel->updateCombo(viewModel->comb);
                         emit viewModel->updateScore(viewModel->point);
                         viewModel->perfect++;
+                        // Inside the game loop, after a note is hit
+                        if(viewModel->comb > viewModel->maxCombo) {
+                            viewModel->maxCombo = viewModel->comb;
+                        }
                         break;
                     } else if (!note.isJudged && note.getTrack()==track+1 && abs(note.getTimestamp() - currentTimeStamp)<= GOOD_TIME) {
                         viewModel->point+= 75;
@@ -52,9 +56,11 @@ void PlayThread::run() {
                         emit viewModel->updateCombo(viewModel->comb);
                         emit viewModel->updateScore(viewModel->point);
                         viewModel->good++;
+                        // Inside the game loop, after a note is hit
+                        if(viewModel->comb > viewModel->maxCombo) {
+                            viewModel->maxCombo = viewModel->comb;
+                        }
                         break;
-                    }else {
-                        viewModel->miss++;
                     }
                 }
 
@@ -87,10 +93,11 @@ void PlayThread::run() {
             std::this_thread::sleep_for(std::chrono::milliseconds(TIME_INTERVAL) - (afterLoopTime - beforeLoopTime));
 
         }
-
-        viewModel->accuracy=double(viewModel->perfect) / double(viewModel->notes.size());
+        viewModel->miss = viewModel->notes.size() - viewModel->perfect - viewModel->good;
+        viewModel->accuracy = double(viewModel->perfect) / double(viewModel->notes.size()) + double(viewModel->good) / double(viewModel->notes.size()) * 0.8;
         double selectGrade = double(viewModel->point)/double(viewModel->notes.size()*100);
-        if(selectGrade=1) viewModel->grade="X";
+
+        if(selectGrade==1) viewModel->grade="X";
         else if(selectGrade>=0.95) viewModel->grade="S";
         else if(selectGrade>=0.9) viewModel->grade="A";
         else if(selectGrade>=0.8) viewModel->grade="B";

@@ -22,15 +22,14 @@ void albumBlock::paintEvent(QPaintEvent *event)
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
-    if (!m_albumBlockPixmap.load(m_albumPath)) { // 注意这里使用资源系统路径
+    if (!m_albumBlockPixmap.load(m_albumPath)) {
         qDebug() << "Failed to load albumBlock image.";
+    } else {
+        // 缩放图片至400x400大小
+        QPixmap scaledPixmap = m_albumBlockPixmap.scaled(400, 400, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        // 绘制缩放后的图片
+        painter.drawPixmap(0, 0, scaledPixmap);
     }
 
-    // 绘制背景图片
-    if (!m_albumBlockPixmap.isNull()) {
-        painter.drawPixmap(0, 0, m_albumBlockPixmap);
-    }
-
-    // m_painted = true;
     QWidget::paintEvent(event);
 }

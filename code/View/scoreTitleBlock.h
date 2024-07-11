@@ -10,12 +10,14 @@ Q_OBJECT
 public:
     explicit ScoreTitleBlock(QWidget *parent = nullptr);
     void setTitle(const QString &title);
+    void setAlign(int align) { this->align = align; }
 
 protected:
     void paintEvent(QPaintEvent *event) override;
 
 private:
     QString title;
+    int align = Qt::AlignRight;
 };
 
 #endif // SCORETITLEBLOCK_H

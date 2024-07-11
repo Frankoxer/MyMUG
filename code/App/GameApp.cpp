@@ -19,6 +19,7 @@ void GameApp::Init() {
     connect(viewModel, &ViewModel::createTitleBlock, mainWindow, &MainWindow::createScoreTitleBlock);
     connect(viewModel, &ViewModel::createJudgementLine, mainWindow, &MainWindow::createJudgementLine);
     connect(viewModel, &ViewModel::playtapsound, mainWindow, &MainWindow::playtapsound);
+    connect(viewModel, &ViewModel::showSettlement, mainWindow, &MainWindow::showResults);
     connect(mainWindow, &MainWindow::key0Pressed, viewModel, &ViewModel::dIsPressed);
     connect(mainWindow, &MainWindow::key1Pressed, viewModel, &ViewModel::fIsPressed);
     connect(mainWindow, &MainWindow::key2Pressed, viewModel, &ViewModel::jIsPressed);
@@ -29,7 +30,7 @@ void GameApp::Init() {
     connect(mainWindow, &MainWindow::key3Released, viewModel, &ViewModel::kIsReleased);
 
     mainWindow->show();
-    viewModel->initialize("Cyaegha");
+    viewModel->initialize("Chronostasis");
     mainWindow->setActiveNotes(viewModel->getActiveNotes());
 
 

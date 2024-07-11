@@ -8,37 +8,25 @@ void performListBlock::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
-    QPen pen(QColor(255, 255, 255,0));
+    QPen pen(QColor(255, 255, 255, 0));
     painter.setPen(pen);
 
-    // 绘制文本
-    QFont font("Verdana", 16, QFont::Bold);
-    // font.setPointSize(16);
+    QFont font("Bahnschrift", 16, QFont::Bold);
     painter.setPen(Qt::white);
     painter.setFont(font);
 
-    // 绘制第一行文本
-    painter.drawText(QRect(0, 10, width(), 30), Qt::AlignCenter, "performList:");
 
-    // 绘制第二行文本
-    painter.drawText(QRect(0, 40, width(), 30), Qt::AlignCenter, "Perfect:");
-    // font.setPointSize(16);
+    // 绘制"Perfect:"文本，金色
+    painter.setPen(QColor(255, 215, 0));
+    painter.drawText(QRect(0, 50, width(), 30), Qt::AlignLeft, "Perfect:  " + QString::number(perfect));
+
+    // 绘制"Good:"文本，浅蓝色
+    painter.setPen(QColor(0, 191, 255));
+    painter.drawText(QRect(0, 110, width(), 30), Qt::AlignLeft, "Good:  " + QString::number(good));
+
+    // 绘制"Miss:"文本，白色
     painter.setPen(Qt::white);
-    painter.setFont(font);
-
-    // 绘制 performList 文本
-    QString performListStr0 = QString::number(perfect); // 将分数转换为字符串
-    painter.drawText(QRect(0, 15, width(), 35), Qt::AlignRight, performListStr0);
-
-    painter.drawText(QRect(0, 40, width(), 30), Qt::AlignCenter, "Good:");
-
-    QString performListStr1 = QString::number(perfect); // 将分数转换为字符串
-    painter.drawText(QRect(0, 15, width(), 35), Qt::AlignRight, performListStr1);
-
-    painter.drawText(QRect(0, 40, width(), 30), Qt::AlignCenter, "Miss:");
-
-    QString performListStr2 = QString::number(perfect); // 将分数转换为字符串
-    painter.drawText(QRect(0, 15, width(), 35), Qt::AlignRight, performListStr2);
+    painter.drawText(QRect(0, 170, width(), 30), Qt::AlignLeft, "Miss:  " + QString::number(miss));
 
     QWidget::paintEvent(event);
 }

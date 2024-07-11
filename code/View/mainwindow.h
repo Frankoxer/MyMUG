@@ -20,6 +20,7 @@
 #include "accuracyBlock.h"
 #include "maxComboBlock.h"
 #include "performListBlock.h"
+#include "ScoreEnd.h"
 #include "../Common/Key.hpp"
 #include "../Common/NoteInfo.h"
 
@@ -40,6 +41,7 @@ public:
 
 
 public slots:
+    // 游戏运行中
     void updateNotes();
     void updateScore(int score);
     void updateCombo(int combo);
@@ -48,15 +50,8 @@ public slots:
     void createTracks();
     void createJudgementLine();
     void playtapsound();
-    void createBackground_end(const QString &pngPath);
-    void createScoreBlock_end(int score);
-    void createScoreTitleBlock_end(const QString &title);
-    void createComboBlock_end(int combo);
-    void createLevel_end(const QString level_char);
-    void createAlbum_end(const QString &pngPath);
-    void createAccuracy_end(int accuracy);
-    void createMaxCombo_end(int maxCombo);
-    void createPerformList_end(int perfect, int good, int miss);
+    // 结算
+    void showResults(QString title, int point, QString grade, double accuracy, int maxCombo, int perfect, int good, int miss);
 
 protected:
     void keyPressEvent(QKeyEvent *event) override;
@@ -77,20 +72,35 @@ private:
     Ui::MainWindow *ui;
     QMap<int, Key*> activeKeys;  // 存储正在按下的键
     QList<Track*> tracks;
+    JudgementLine *judgementLine = nullptr;
     QList<noteBlock*> noteBlocks;
     std::vector<NoteInfo> *activeNotes;  // 用于存储activeNotesPtr
-    ScoreBlock *scoreBlock = nullptr; // 分数块
+    ScoreBlock *scoreBlock = nullptr; // 游玩分数块
+    ComboBlock *comboBlock = nullptr; // 游玩连击数块
+    ScoreTitleBlock *scoreTitleBlock = nullptr; // 歌曲标题块
     backgroundBlock *background; // 背景块
+
     albumBlock *album;
     levelBlock *level;
     accuracyBlock *acc = nullptr;
     maxComboBlock *maxCom = nullptr;
     performListBlock *list = nullptr;
-    ComboBlock *comboBlock = nullptr; // Combo块
+    ScoreEnd *scoreEnd = nullptr;
+
 
     void createComboBlock(int combo);
     void createScoreBlock(int score);
     void createNotes();
+    // 结算
+    void createBackground_end(const QString &pngPath);
+    void createScoreBlock_end(int score);
+    void createScoreTitleBlock_end(const QString &title);
+    void createComboBlock_end(int combo);
+    void createLevel_end(const QString& level_char);
+    void createAlbum_end(const QString &pngPath);
+    void createAccuracy_end(double accuracy);
+    void createMaxCombo_end(int maxCombo);
+    void createPerformList_end(int perfect, int good, int miss);
 };
 
 #endif //MYMUG_MAINWINDOW_H

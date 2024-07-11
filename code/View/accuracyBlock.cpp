@@ -12,17 +12,14 @@ void accuracyBlock::paintEvent(QPaintEvent *event) {
     painter.setPen(pen);
 
     // 绘制文本
-    QFont font("Accuracy", 16, QFont::Bold);
+    QFont font("Bahnschrift", 16, QFont::Bold);
     // font.setPointSize(16);
     painter.setPen(Qt::white);
     painter.setFont(font);
 
-    //绘制 "accuracy:" 文本
-    painter.drawText(QRect(0, 10, width(), 30), Qt::AlignCenter, "accuracy:");
-
-    // 绘制 accuracy 文本
-    QString accuracyStr = QString::number(accuracy); // 将分数转换为字符串
-    painter.drawText(QRect(0, 15, width(), 35), Qt::AlignRight, accuracyStr);
+    // 绘制 accuracy 文本，将十进制 0~1 浮点数转化为两位小数的百分数
+    QString accuracyStr = QString::number(accuracy * 100, 'f', 2) + "%";
+    painter.drawText(QRect(0, 10, width(), 40), Qt::AlignCenter, "Accuracy:  " + accuracyStr);
 
     QWidget::paintEvent(event);
 }

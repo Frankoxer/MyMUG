@@ -50,6 +50,8 @@ add_executable(MyMUG
         code/View/maxComboBlock.h
         code/View/performListBlock.cpp
         code/View/performListBlock.h
+        code/View/ScoreEnd.cpp
+        code/View/ScoreEnd.h
 )
 
 target_link_libraries(MyMUG

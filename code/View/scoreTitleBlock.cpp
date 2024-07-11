@@ -26,7 +26,7 @@ void ScoreTitleBlock::paintEvent(QPaintEvent *event) {
     painter.setFont(font);
 
     // 绘制乐谱名称
-    painter.drawText(QRect(0, 0, width(), height()), Qt::AlignRight, title);
+    painter.drawText(QRect(0, 0, width(), height()), align, title);
 
     QWidget::paintEvent(event);
 }

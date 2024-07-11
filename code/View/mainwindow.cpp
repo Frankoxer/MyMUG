@@ -47,7 +47,7 @@ void MainWindow::createTracks() {
 }
 
 void MainWindow::createJudgementLine(){
-    auto *judgementLine = new JudgementLine(this);
+    judgementLine = new JudgementLine(this);
     judgementLine->move(480, 750);
     judgementLine->show();
 }
@@ -122,7 +122,7 @@ void MainWindow::createScoreBlock(int score) {
 }
 
 void MainWindow::createScoreTitleBlock(const QString &title) {
-    auto *scoreTitleBlock = new ScoreTitleBlock(this); // Create a new ScoreTitleBlock object
+    scoreTitleBlock = new ScoreTitleBlock(this); // Create a new ScoreTitleBlock object
     scoreTitleBlock->move(1090, 830); // Move the block to the specified position (x=1340, y=0)
     scoreTitleBlock->setTitle(title); // Set the title for the block
     scoreTitleBlock->show(); // Display the block
@@ -143,6 +143,52 @@ void MainWindow::updateCombo(int newCombo) {
     createComboBlock(newCombo);
 }
 
+void MainWindow::showResults(QString title, int point, QString grade, double accuracy, int maxCombo, int perfect, int good, int miss) {
+    // 把原来的背景、音符、分数块、连击块、轨道、判定线和歌曲标题块全部删除
+    if(background != nullptr) {
+        delete background;
+        background = nullptr;
+    }
+    if(scoreBlock != nullptr) {
+        delete scoreBlock;
+        scoreBlock = nullptr;
+    }
+    if(comboBlock != nullptr) {
+        delete comboBlock;
+        comboBlock = nullptr;
+    }
+    for (auto track : tracks) {
+        delete track;
+    }
+    tracks.clear();
+    if(judgementLine != nullptr) {
+        delete judgementLine;
+        judgementLine = nullptr;
+    }
+    if(scoreTitleBlock != nullptr) {
+        delete scoreTitleBlock;
+        scoreTitleBlock = nullptr;
+    }
+    // 背景
+    QString cover_Path = "../resources/covers/" + title + ".png";
+    createBackground_end(cover_Path);
+    // 专辑封面
+    QString album_Path = "../resources/albums/" + title + ".png";
+    createAlbum_end(album_Path);
+    // 分数
+    createScoreBlock_end(point);
+    // 等级
+    createLevel_end(grade);
+    // acc
+    createAccuracy_end(accuracy);
+    // 最大连击数
+    createMaxCombo_end(maxCombo);
+    // 音符统计
+    createPerformList_end(perfect, good, miss);
+    // 歌曲名字
+    createScoreTitleBlock_end(title);
+}
+
 void MainWindow::createBackground_end(const QString &pngPath) {
     background = new backgroundBlock(this);
     background->setBackgroundPath(pngPath);
@@ -152,16 +198,15 @@ void MainWindow::createBackground_end(const QString &pngPath) {
 
 
 void MainWindow::createScoreBlock_end(int score) {
-    // 先把原来的分数块删除
-    scoreBlock = new ScoreBlock(this);
-    scoreBlock->setScore(score);
-    scoreBlock->move(900, 300);
-    scoreBlock->show();
+    scoreEnd = new ScoreEnd(this);
+    scoreEnd->setScore(score);
+    scoreEnd->move(870, 250);
+    scoreEnd->show();
 }
 
-void MainWindow::createLevel_end(const QString level_char) {
+void MainWindow::createLevel_end(const QString& level_char) {
     level = new levelBlock(this);
-    level->move(1040, 300);
+    level->move(1040, 230);
     level->setLevel(level_char);
     level->show();
 }
@@ -169,21 +214,21 @@ void MainWindow::createLevel_end(const QString level_char) {
 void MainWindow::createAlbum_end(const QString &pngPath) {
     album = new albumBlock(this);
     album->setalbumPath(pngPath);
-    album->move(220, 250);
+    album->move(220, 235);
     album->show();
 }
 
-void MainWindow::createAccuracy_end(int accuracy) {
+void MainWindow::createAccuracy_end(double accuracy) {
     acc = new accuracyBlock(this);
     acc->setaccuracy(accuracy);
-    acc->move(900, 380);
+    acc->move(820, 380);
     acc->show();
 }
 
 void MainWindow::createMaxCombo_end(int maxCombo) {
     maxCom = new maxComboBlock(this);
     maxCom->setmaxCombo(maxCombo);
-    maxCom->move(900, 380);
+    maxCom->move(1040, 380);
     maxCom->show();
 }
 
@@ -194,13 +239,10 @@ void MainWindow::createPerformList_end(int perfect, int good, int miss) {
     list->show();
 }
 
-
-
-
-
 void MainWindow::createScoreTitleBlock_end(const QString &title) {
     auto *scoreTitleBlock = new ScoreTitleBlock(this); // Create a new ScoreTitleBlock object
-    scoreTitleBlock->move(390, 670); // Move the block to the specified position (x=1340, y=0)
+    scoreTitleBlock->setAlign(Qt::AlignCenter);
+    scoreTitleBlock->move(270, 660); // Move the block to the specified position (x=1340, y=0)
     scoreTitleBlock->setTitle(title); // Set the title for the block
     scoreTitleBlock->show(); // Display the block
 }

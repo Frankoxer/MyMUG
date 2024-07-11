@@ -14,12 +14,4 @@
 
 ## 构建注意事项
 
-1. 将 CMakeLists 中的 Qt 路径切换为自己电脑的相应路径；
-2. 将 Qt 安装目录的 bin 文件夹添加进环境变量，然后在命令行中输入：
-   ```text
-    windeployqt.exe filepath
-   ```
-   其中 `filepath` 为 cmake-build-debug 文件夹中的 MyMUG.exe 可执行文件的路径。例如：
-    ```text
-     windeployqt.exe E:\course\c++\MyMUG\cmake-build-debug\MyMUG.exe
-    ```
+将 CMakeLists 中的 Qt 路径切换为自己电脑的相应路径。

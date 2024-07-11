@@ -12,17 +12,14 @@ void maxComboBlock::paintEvent(QPaintEvent *event) {
     painter.setPen(pen);
 
     // 绘制文本
-    QFont font("maxCombo", 16, QFont::Bold);
+    QFont font("Bahnschrift", 16, QFont::Bold);
     // font.setPointSize(16);
     painter.setPen(Qt::white);
     painter.setFont(font);
 
-    // 绘制 "maxCombo:" 文本
-    // painter.drawText(QRect(0, 10, width(), 30), Qt::AlignCenter, "maxCombo:");
-
     // 绘制 maxCombo 文本
     QString maxComboStr = QString::number(maxCombo); // 将分数转换为字符串
-    painter.drawText(QRect(0, 15, width(), 35), Qt::AlignRight, maxComboStr);
+    painter.drawText(QRect(0, 10, width(), 40), Qt::AlignCenter, "Max Combo:  " + maxComboStr);
 
     QWidget::paintEvent(event);
 }
