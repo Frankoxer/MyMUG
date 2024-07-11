@@ -41,6 +41,7 @@ void PlayThread::run() {
                         emit viewModel->playtapsound();
                         emit viewModel->updateCombo(viewModel->comb);
                         emit viewModel->updateScore(viewModel->point);
+                        viewModel->perfect++;
                         break;
                     } else if (!note.isJudged && note.getTrack()==track+1 && abs(note.getTimestamp() - currentTimeStamp)<= GOOD_TIME) {
                         viewModel->point+= 75;
@@ -50,7 +51,10 @@ void PlayThread::run() {
                         emit viewModel->playtapsound();
                         emit viewModel->updateCombo(viewModel->comb);
                         emit viewModel->updateScore(viewModel->point);
+                        viewModel->good++;
                         break;
+                    }else {
+                        viewModel->miss++;
                     }
                 }
 
@@ -61,6 +65,7 @@ void PlayThread::run() {
             int currentTimeStamp = std::chrono::duration_cast<std::chrono::duration<long long, std::ratio<1, 1000>>>(currentTime - viewModel->gameStartTime).count();
             for (auto & note : viewModel->notes) {
                 if (!note.isJudged &&  currentTimeStamp - note.getTimestamp() > GOOD_TIME) {
+                    if(viewModel->comb>viewModel->maxCombo)viewModel->maxCombo=viewModel->comb;
                     viewModel->comb = 0; // Reset the comb count when a note is missed
                     emit viewModel->updateCombo(viewModel->comb);
                     note.isJudged = true; // Mark the note as judged
@@ -82,5 +87,15 @@ void PlayThread::run() {
             std::this_thread::sleep_for(std::chrono::milliseconds(TIME_INTERVAL) - (afterLoopTime - beforeLoopTime));
 
         }
+
+        viewModel->accuracy=double(viewModel->perfect) / double(viewModel->notes.size());
+        double selectGrade = double(viewModel->point)/double(viewModel->notes.size()*100);
+        if(selectGrade=1) viewModel->grade='X';
+        else if(selectGrade>=0.95) viewModel->grade='S';
+        else if(selectGrade>=0.9) viewModel->grade='A';
+        else if(selectGrade>=0.8) viewModel->grade='B';
+        else viewModel->grade='C';
+
+        emit viewModel->showSettlement(viewModel->title,viewModel->point,viewModel->grade,viewModel->accuracy,viewModel->maxCombo,viewModel->perfect,viewModel->good,viewModel->miss);
     }
 }
