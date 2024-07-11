@@ -6,6 +6,7 @@
 #include <fstream>
 #include <chrono>
 #include <thread>
+#include <utility>
 #include <vector>
 #include <memory>
 #include <string>
@@ -16,6 +17,7 @@
 #include "../Common/NoteInfo.h"
 #include "PlayThread.h"
 #include "MusicThread.h"
+#include <filesystem>
 
 // 全局常量
 const int LENGTH = 1440;
@@ -50,7 +52,7 @@ public:
           grade("")
     {}
 
-    ~ViewModel() {
+    ~ViewModel() override {
         if (musicThread && musicThread->isRunning()) {
             musicThread->quit();
             musicThread->wait();
@@ -61,8 +63,18 @@ public:
         }
     }
 
-    void initialize(const std::string& songTitle) {
-        title = songTitle;
+    std::vector<QString> select_songs() {
+        std::vector<QString> filenames;
+        for (const auto& entry : std::filesystem::directory_iterator("../resources/charts")) {
+            if (entry.is_regular_file()) { // 不含后缀名
+                filenames.push_back(QString::fromStdString(entry.path().stem().string()));
+            }
+        }
+        return filenames;
+    }
+
+    void initialize(std::string songTitle) {
+        title = std::move(songTitle);
         std::string songFile;
         songFile = "../resources/charts/" + title + ".json";
         pngPath = QString::fromStdString("../resources/covers/" + title + ".png");
@@ -95,9 +107,9 @@ public:
 
     void play() {
         std::string songPath = "../resources/music/" + title + ".wav";
-        LPCSTR songPathChar = songPath.c_str();
 
-        musicThread = std::make_unique<MusicThread>(songPathChar);
+        musicThread = new MusicThread;
+        musicThread->setPath(songPath);
         playThread = std::make_unique<PlayThread>(this);
 
         musicThread->start();
@@ -122,6 +134,11 @@ signals:
     void showSettlement(QString title,int point,QString grade,double accuracy,int maxComb,int perfect,int good,int miss);
 
 public slots:
+    void startplay(std::string song) {
+        initialize(song);
+        play();
+    }
+
     void dIsPressed() {
     // std::cout << "dIsPressed" << std::endl;
         keyFromView[0] = true;
@@ -216,7 +233,7 @@ public:
     double accuracy;
     QString grade;
 
-    std::unique_ptr<MusicThread> musicThread;
+    MusicThread* musicThread;
     std::unique_ptr<PlayThread> playThread;
 };
 

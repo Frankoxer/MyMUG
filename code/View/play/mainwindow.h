@@ -21,8 +21,8 @@
 #include "maxComboBlock.h"
 #include "performListBlock.h"
 #include "ScoreEnd.h"
-#include "../Common/Key.hpp"
-#include "../Common/NoteInfo.h"
+#include "../../Common/Key.hpp"
+#include "../../Common/NoteInfo.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

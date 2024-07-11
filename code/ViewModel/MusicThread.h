@@ -6,18 +6,20 @@
 #define MUSICTHREAD_H
 
 #include <QThread>
+#include <utility>
 #include <windows.h>
 
 class MusicThread : public QThread {
     Q_OBJECT
 public:
-    explicit MusicThread(LPCSTR songPathChar) : songPathChar(songPathChar) {}
+    explicit MusicThread() {}
+    void setPath(std::string songPathChar) { this->songPathChar = std::move(songPathChar); }
 
 protected:
     void run() override;
 
 private:
-    LPCSTR songPathChar;
+    std::string songPathChar;
 };
 
 

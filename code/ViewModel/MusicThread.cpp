@@ -3,7 +3,9 @@
 //
 
 #include "MusicThread.h"
+#include <iostream>
 
 void MusicThread::run() {
-    PlaySound(TEXT(songPathChar), nullptr, SND_FILENAME | SND_ASYNC);
+    std::cout << "MusicThread running: " << songPathChar << std::endl;
+    PlaySound(TEXT(songPathChar.c_str()), nullptr, SND_FILENAME | SND_ASYNC);
 }
