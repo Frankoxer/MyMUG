@@ -13,7 +13,7 @@
 #include <windows.h>
 #include "Song.hpp"
 #include "Note.hpp"
-#include "../Common/Key.hpp"
+#include "Key.hpp"
 #include "../Common/NoteInfo.h"
 #include "PlayThread.h"
 #include "MusicThread.h"

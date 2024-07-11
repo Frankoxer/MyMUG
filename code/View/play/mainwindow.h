@@ -21,7 +21,7 @@
 #include "maxComboBlock.h"
 #include "performListBlock.h"
 #include "ScoreEnd.h"
-#include "../../Common/Key.hpp"
+// #include "../../Common/Key.hpp"
 #include "../../Common/NoteInfo.h"
 
 QT_BEGIN_NAMESPACE
@@ -58,7 +58,6 @@ protected:
     void keyReleaseEvent(QKeyEvent *event) override;
 
 signals:
-    void keyStateChanged(const Key &key);
     void key0Pressed();
     void key1Pressed();
     void key2Pressed();
@@ -70,7 +69,6 @@ signals:
 
 private:
     Ui::MainWindow *ui;
-    QMap<int, Key*> activeKeys;  // 存储正在按下的键
     QList<Track*> tracks;
     JudgementLine *judgementLine = nullptr;
     QList<noteBlock*> noteBlocks;

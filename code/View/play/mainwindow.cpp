@@ -22,8 +22,8 @@ MainWindow::~MainWindow() {
     delete ui;
 
     // 清理 activeKeys 中的 KeyEvent 对象
-    qDeleteAll(activeKeys);
-    activeKeys.clear();
+    // qDeleteAll(activeKeys);
+    // activeKeys.clear();
 }
 
 //QString path
