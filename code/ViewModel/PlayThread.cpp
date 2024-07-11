@@ -90,12 +90,12 @@ void PlayThread::run() {
 
         viewModel->accuracy=double(viewModel->perfect) / double(viewModel->notes.size());
         double selectGrade = double(viewModel->point)/double(viewModel->notes.size()*100);
-        if(selectGrade=1) viewModel->grade='X';
-        else if(selectGrade>=0.95) viewModel->grade='S';
-        else if(selectGrade>=0.9) viewModel->grade='A';
-        else if(selectGrade>=0.8) viewModel->grade='B';
-        else viewModel->grade='C';
+        if(selectGrade=1) viewModel->grade="X";
+        else if(selectGrade>=0.95) viewModel->grade="S";
+        else if(selectGrade>=0.9) viewModel->grade="A";
+        else if(selectGrade>=0.8) viewModel->grade="B";
+        else viewModel->grade="C";
 
-        emit viewModel->showSettlement(viewModel->title,viewModel->point,viewModel->grade,viewModel->accuracy,viewModel->maxCombo,viewModel->perfect,viewModel->good,viewModel->miss);
+        emit viewModel->showSettlement(QString::fromStdString(viewModel->title),viewModel->point,viewModel->grade,viewModel->accuracy,viewModel->maxCombo,viewModel->perfect,viewModel->good,viewModel->miss);
     }
 }

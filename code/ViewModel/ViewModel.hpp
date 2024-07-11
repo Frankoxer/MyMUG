@@ -46,7 +46,7 @@ public:
           good(0),
           miss(0),
           accuracy(0.0),
-          grade('')
+          grade("")
     {}
 
     void initialize(const std::string& songTitle) {
@@ -100,7 +100,7 @@ signals:
     void createTracks();
     void createJudgementLine();
     void playtapsound();
-    void showSettlement(QString title,int point,char grade,double accuracy,int maxComb,int perfect,int good,int miss);
+    void showSettlement(QString title,int point,QString grade,double accuracy,int maxComb,int perfect,int good,int miss);
 
 public slots:
     void dIsPressed() {
@@ -195,7 +195,7 @@ public:
     int good;
     int miss;
     double accuracy;
-    char grade;
+    QString grade;
 };
 
 
