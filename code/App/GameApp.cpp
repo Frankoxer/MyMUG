@@ -34,6 +34,6 @@ void GameApp::Init() {
     mainWindow->setActiveNotes(viewModel->getActiveNotes());
 
 
-    viewModel->startGame();
+    viewModel->play();
 
 }

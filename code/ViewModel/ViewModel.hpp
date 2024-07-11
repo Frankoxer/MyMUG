@@ -15,6 +15,7 @@
 #include "../Common/Key.hpp"
 #include "../Common/NoteInfo.h"
 #include "PlayThread.h"
+#include "MusicThread.h"
 
 // 全局常量
 const int LENGTH = 1440;
@@ -49,6 +50,17 @@ public:
           grade("")
     {}
 
+    ~ViewModel() {
+        if (musicThread && musicThread->isRunning()) {
+            musicThread->quit();
+            musicThread->wait();
+        }
+        if (playThread && playThread->isRunning()) {
+            playThread->quit();
+            playThread->wait();
+        }
+    }
+
     void initialize(const std::string& songTitle) {
         title = songTitle;
         std::string songFile;
@@ -81,10 +93,17 @@ public:
         titlePtr = &title;
     }
 
-    void startGame() {
-        auto *playThread = new PlayThread(this);
+    void play() {
+        std::string songPath = "../resources/music/" + title + ".wav";
+        LPCSTR songPathChar = songPath.c_str();
+
+        musicThread = std::make_unique<MusicThread>(songPathChar);
+        playThread = std::make_unique<PlayThread>(this);
+
+        musicThread->start();
         playThread->start();
     }
+
 
     std::vector<NoteInfo>* getActiveNotes() const { return activeNotesPtr; }
     int* getPoint() const { return pointPtr; }
@@ -196,6 +215,9 @@ public:
     int miss;
     double accuracy;
     QString grade;
+
+    std::unique_ptr<MusicThread> musicThread;
+    std::unique_ptr<PlayThread> playThread;
 };
 
 

@@ -52,6 +52,8 @@ add_executable(MyMUG
         code/View/performListBlock.h
         code/View/ScoreEnd.cpp
         code/View/ScoreEnd.h
+        code/ViewModel/MusicThread.cpp
+        code/ViewModel/MusicThread.h
 )
 
 target_link_libraries(MyMUG

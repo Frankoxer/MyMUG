@@ -9,17 +9,12 @@ PlayThread::PlayThread(ViewModel* viewModel) : viewModel(viewModel) {}
 
 void PlayThread::run() {
     if (viewModel) {
-        auto it = viewModel->notes.begin();
-        std::string songPath;
-        songPath+="../resources/music/" + viewModel->title + ".wav";
-        LPCSTR songPathChar = songPath.c_str();
-        PlaySound(TEXT(songPathChar), nullptr, SND_FILENAME | SND_ASYNC);
         viewModel->gameStartTime = std::chrono::steady_clock::now();
-
         for(auto it: viewModel->keys) {
             it.updateStartTime(viewModel->gameStartTime);
         }
 
+        auto it = viewModel->notes.begin();
         while (true) {
             auto beforeLoopTime = std::chrono::steady_clock::now();
 
@@ -47,7 +42,8 @@ void PlayThread::run() {
                             viewModel->maxCombo = viewModel->comb;
                         }
                         break;
-                    } else if (!note.isJudged && note.getTrack()==track+1 && abs(note.getTimestamp() - currentTimeStamp)<= GOOD_TIME) {
+                    }
+                    if (!note.isJudged && note.getTrack()==track+1 && abs(note.getTimestamp() - currentTimeStamp)<= GOOD_TIME) {
                         viewModel->point+= 75;
                         note.isJudged = true;
                         note.visible = false;
