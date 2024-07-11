@@ -40,7 +40,14 @@ public:
           pointPtr(nullptr),
           titlePtr(nullptr),
           pngPathPtr(nullptr),
-          song(Song("", "", 0, std::vector<Note>(), 0)) {}
+          song(Song("", "", 0, std::vector<Note>(), 0)),
+          maxCombo(0),
+          perfect(0),
+          good(0),
+          miss(0),
+          accuracy(0.0),
+          grade("")
+    {}
 
     void initialize(const std::string& songTitle) {
         title = songTitle;
@@ -93,6 +100,7 @@ signals:
     void createTracks();
     void createJudgementLine();
     void playtapsound();
+    void showSettlement(QString title,int point,QString grade,double accuracy,int maxComb,int perfect,int good,int miss);
 
 public slots:
     void dIsPressed() {
@@ -180,6 +188,14 @@ public:
     QString pngPath;
     QString musicPath;
     std::string* pngPathPtr;
+
+    //varialbes for Settlement Interface
+    int maxCombo;
+    int perfect;
+    int good;
+    int miss;
+    double accuracy;
+    QString grade;
 };
 
 
