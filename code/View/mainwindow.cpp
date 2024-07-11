@@ -90,13 +90,13 @@ void MainWindow::createNotes() {
 void MainWindow::createComboBlock(int combo) {
     // 先把原来的连击块删除
 
-        // comboBlock->hide();
+    // comboBlock->hide();
 
     if(comboBlock != nullptr) {
         delete comboBlock;
         comboBlock = nullptr; // Prevent double deletion and invalid access
     }
-        // comboBlock = nullptr;
+    // comboBlock = nullptr;
 
     if(combo == 0) return ;
     comboBlock = new ComboBlock(this);
@@ -112,7 +112,7 @@ void MainWindow::createScoreBlock(int score) {
         delete scoreBlock;
         scoreBlock = nullptr; // Prevent double deletion and invalid access
     }
-        // scoreBlock->hide(
+    // scoreBlock->hide(
 
 
     scoreBlock = new ScoreBlock(this);
@@ -142,6 +142,89 @@ void MainWindow::updateCombo(int newCombo) {
     // 更新连击数
     createComboBlock(newCombo);
 }
+
+void MainWindow::createBackground_end(const QString &pngPath) {
+    background = new backgroundBlock(this);
+    background->setBackgroundPath(pngPath);
+    background->move(0, 0);
+    background->show();
+}
+
+
+void MainWindow::createScoreBlock_end(int score) {
+    // 先把原来的分数块删除
+    scoreBlock = new ScoreBlock(this);
+    scoreBlock->setScore(score);
+    scoreBlock->move(900, 300);
+    scoreBlock->show();
+}
+
+void MainWindow::createLevel_end(const QString level_char) {
+    level = new levelBlock(this);
+    level->move(1040, 300);
+    level->setLevel(level_char);
+    level->show();
+}
+
+void MainWindow::createAlbum_end(const QString &pngPath) {
+    album = new albumBlock(this);
+    album->setalbumPath(pngPath);
+    album->move(220, 250);
+    album->show();
+}
+
+void MainWindow::createAccuracy_end(int accuracy) {
+    acc = new accuracyBlock(this);
+    acc->setaccuracy(accuracy);
+    acc->move(900, 380);
+    acc->show();
+}
+
+void MainWindow::createMaxCombo_end(int maxCombo) {
+    maxCom = new maxComboBlock(this);
+    maxCom->setmaxCombo(maxCombo);
+    maxCom->move(900, 380);
+    maxCom->show();
+}
+
+void MainWindow::createPerformList_end(int perfect, int good, int miss) {
+    list = new performListBlock(this);
+    list->setperformList(perfect,good,miss);
+    list->move(950, 450);
+    list->show();
+}
+
+
+
+
+
+void MainWindow::createScoreTitleBlock_end(const QString &title) {
+    auto *scoreTitleBlock = new ScoreTitleBlock(this); // Create a new ScoreTitleBlock object
+    scoreTitleBlock->move(390, 670); // Move the block to the specified position (x=1340, y=0)
+    scoreTitleBlock->setTitle(title); // Set the title for the block
+    scoreTitleBlock->show(); // Display the block
+}
+
+
+void MainWindow::createComboBlock_end(int combo) {
+
+    // comboBlock->hide();
+
+    if(comboBlock != nullptr) {
+        delete comboBlock;
+        comboBlock = nullptr; // Prevent double deletion and invalid access
+    }
+    // comboBlock = nullptr;
+
+    if(combo == 0) return ;
+    comboBlock = new ComboBlock(this);
+    comboBlock->setCombo(combo);
+    comboBlock->move(150, 300);
+    comboBlock->show();
+}
+
+
+
 
 void MainWindow::keyPressEvent(QKeyEvent *event) {
     if (event->isAutoRepeat())

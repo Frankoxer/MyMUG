@@ -15,6 +15,11 @@
 #include "ScoreBlock.h"
 #include "scoreTitleBlock.h"
 #include "backgroundBlock.h"
+#include "albumBlock.h"
+#include "levelBlock.h"
+#include "accuracyBlock.h"
+#include "maxComboBlock.h"
+#include "performListBlock.h"
 #include "../Common/Key.hpp"
 #include "../Common/NoteInfo.h"
 
@@ -33,6 +38,7 @@ public:
     void recieveActiveNotes(std::vector<NoteInfo> *activeNotesPtr);
     std::vector<NoteInfo>* getActiveNotes() const { return activeNotes; }
 
+
 public slots:
     void updateNotes();
     void updateScore(int score);
@@ -42,6 +48,15 @@ public slots:
     void createTracks();
     void createJudgementLine();
     void playtapsound();
+    void createBackground_end(const QString &pngPath);
+    void createScoreBlock_end(int score);
+    void createScoreTitleBlock_end(const QString &title);
+    void createComboBlock_end(int combo);
+    void createLevel_end(const QString level_char);
+    void createAlbum_end(const QString &pngPath);
+    void createAccuracy_end(int accuracy);
+    void createMaxCombo_end(int maxCombo);
+    void createPerformList_end(int perfect, int good, int miss);
 
 protected:
     void keyPressEvent(QKeyEvent *event) override;
@@ -66,6 +81,11 @@ private:
     std::vector<NoteInfo> *activeNotes;  // 用于存储activeNotesPtr
     ScoreBlock *scoreBlock = nullptr; // 分数块
     backgroundBlock *background; // 背景块
+    albumBlock *album;
+    levelBlock *level;
+    accuracyBlock *acc = nullptr;
+    maxComboBlock *maxCom = nullptr;
+    performListBlock *list = nullptr;
     ComboBlock *comboBlock = nullptr; // Combo块
 
     void createComboBlock(int combo);
