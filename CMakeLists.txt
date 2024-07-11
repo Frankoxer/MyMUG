@@ -13,12 +13,10 @@ find_package(Qt5 COMPONENTS
         Gui
         Widgets
         Multimedia
-        MultimediaWidgets
-        MultimediaQuick
         REQUIRED)
 
 # 添加资源文件
-qt5_add_resources(RESOURCES code/View/resources.qrc)
+#qt5_add_resources(RESOURCES code/View/resource.qrc)
 
 add_executable(MyMUG
         main.cpp
@@ -49,8 +47,6 @@ target_link_libraries(MyMUG
         Qt5::Gui
         Qt5::Widgets
         Qt5::Multimedia
-        Qt5::MultimediaWidgets
-        Qt5::MultimediaQuick
         winmm
 )
 
@@ -75,10 +71,21 @@ if (WIN32 AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
                 "${QT_INSTALL_PATH}/plugins/platforms/qwindows${DEBUG_SUFFIX}.dll"
                 "$<TARGET_FILE_DIR:${PROJECT_NAME}>/plugins/platforms/")
     endif ()
-    foreach (QT_LIB Core Gui Widgets)
+    foreach (QT_LIB Core Gui Widgets Multimedia)
         add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
                 COMMAND ${CMAKE_COMMAND} -E copy
                 "${QT_INSTALL_PATH}/bin/Qt5${QT_LIB}${DEBUG_SUFFIX}.dll"
                 "$<TARGET_FILE_DIR:${PROJECT_NAME}>")
     endforeach (QT_LIB)
 endif ()
+
+# 修改自定义命令以将 audio 插件目录复制到 cmake-build-debug 文件夹的根目录下
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${QT_INSTALL_PATH}/plugins/audio"
+        "${CMAKE_BINARY_DIR}/audio")
+
+# 创建自定义目标以确保上述命令在构建后执行
+add_custom_target(copy_audio_plugins ALL
+        COMMAND ${CMAKE_COMMAND} -E echo "Copying Qt audio plugins..."
+        DEPENDS ${PROJECT_NAME})

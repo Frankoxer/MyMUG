@@ -21,7 +21,7 @@ void ScoreTitleBlock::paintEvent(QPaintEvent *event) {
     painter.drawRect(0, 0, width(), height());
 
     // 绘制文本
-    QFont font("Verdana", 16);
+    QFont font("Bahnschrift", 16);
     painter.setPen(Qt::white);
     painter.setFont(font);
 

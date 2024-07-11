@@ -12,7 +12,7 @@ void ScoreBlock::paintEvent(QPaintEvent *event) {
     painter.setPen(pen);
 
     // 绘制文本
-    QFont font("Verdana", 16, QFont::Bold);
+    QFont font("Bahnschrift", 16, QFont::Bold);
     // font.setPointSize(16);
     painter.setPen(Qt::white);
     painter.setFont(font);

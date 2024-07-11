@@ -13,7 +13,7 @@ void ComboBlock::paintEvent(QPaintEvent *event) {
 
 
     // 绘制文本
-    QFont font("Verdana", 16);
+    QFont font("Bahnschrift", 16);
     painter.setPen(Qt::white);
     painter.setFont(font);
 
