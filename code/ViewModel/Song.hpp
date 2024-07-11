@@ -21,8 +21,8 @@ public:
         bpm = j["bpm"];
         title = j["title"];
         endTime = j["endTime"];
-        for (const auto& note : j["notes"]) {
-            notes.emplace_back(note["timestamp"], note["key"], note["type"] == "Tap" ? Note::Tap : Note::Hold);
+        for (auto& note : j["notes"]) {
+            notes.emplace_back(note["timestamp"].get<int>()+240, note["key"], note["type"] == "Tap" ? Note::Tap : Note::Hold);
         }
 
     }

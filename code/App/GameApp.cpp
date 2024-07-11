@@ -18,6 +18,7 @@ void GameApp::Init() {
     connect(viewModel, &ViewModel::createTracks, mainWindow, &MainWindow::createTracks);
     connect(viewModel, &ViewModel::createTitleBlock, mainWindow, &MainWindow::createScoreTitleBlock);
     connect(viewModel, &ViewModel::createJudgementLine, mainWindow, &MainWindow::createJudgementLine);
+    connect(viewModel, &ViewModel::playtapsound, mainWindow, &MainWindow::playtapsound);
     connect(mainWindow, &MainWindow::key0Pressed, viewModel, &ViewModel::dIsPressed);
     connect(mainWindow, &MainWindow::key1Pressed, viewModel, &ViewModel::fIsPressed);
     connect(mainWindow, &MainWindow::key2Pressed, viewModel, &ViewModel::jIsPressed);
