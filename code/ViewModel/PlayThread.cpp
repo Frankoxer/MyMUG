@@ -99,6 +99,9 @@ void PlayThread::run() {
         else if(selectGrade>=0.8) viewModel->grade="B";
         else viewModel->grade="C";
 
+        std::string result_music = "../resources/sounds/result.wav";
+        LPCSTR songPathChar = result_music.c_str();
+        PlaySound(TEXT(songPathChar), nullptr, SND_FILENAME | SND_ASYNC);
         emit viewModel->showSettlement(QString::fromStdString(viewModel->title),viewModel->point,viewModel->grade,viewModel->accuracy,viewModel->maxCombo,viewModel->perfect,viewModel->good,viewModel->miss);
     }
 }
